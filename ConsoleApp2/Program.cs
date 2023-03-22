@@ -9,10 +9,10 @@
             new User()
         };
         List<Person> People = new();
-        var MainMenuPersonItems = new string[] { "Exit", "Add", "Remove", "Edit", "Show" };
+        var MainMenuPersonItems = new string[] { "Выход", "Добавить", "Удалить", "Изменить", "Показать" };
         while (true)
         {
-            Menu.Show(MainMenuPersonItems);
+            ConsoleRead_Write.WriteMenu(MainMenuPersonItems);
             if (DoPersonActions(ConsoleRead_Write.ReadInt(), People) == (byte)CodeStatus.EXIT)
                 return;
 
@@ -46,7 +46,7 @@
                 return value;
 
             default:
-                Message.Show(message: "Неверное значение", "Red");
+                ConsoleRead_Write.WriteMessage(message: "Неверное значение", "Red");
                 return null;
         }
     }
@@ -72,5 +72,3 @@
         Show = 4,
     }
 }
-
-

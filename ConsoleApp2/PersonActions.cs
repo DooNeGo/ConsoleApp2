@@ -6,7 +6,7 @@
         if (value is null)
             return;
         People.RemoveAt((int)value - 1);
-        Message.Show("Успешное удаление", "Green");
+        ConsoleRead_Write.WriteMessage("Успешное удаление", "Green");
     }
 
     public static void ShowList(List<Person> People)
@@ -14,7 +14,7 @@
         Console.Clear();
         if (People.Count == 0)
         {
-            Message.Show("Пусто...");
+            ConsoleRead_Write.WriteMessage("Пусто...");
             return;
         }
         for (int i = 0; i < People.Count; i++)
@@ -37,11 +37,11 @@
             Console.Write("Введите возраст (0 -  Назад): ");
             Person.Age = ConsoleRead_Write.ReadInt();
             if (Person.Age is null)
-                Message.Show("Неверное значение", "Red");
+                ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
             else if (Person.Age == 0)
                 return;
         } while (Person.Age < 1 || Person.Age > 100);
-        Message.Show("Успешное добавление", "Green");
+        ConsoleRead_Write.WriteMessage("Успешное добавление", "Green");
         People.Add(Person);
     }
 
@@ -53,22 +53,16 @@
             return;
         while (true)
         {
-            Menu.Show(EditMenuItems, " Изменить ");
+            ConsoleRead_Write.WriteMenu(EditMenuItems, " Изменить ");
             var value = ConsoleRead_Write.ReadInt();
-            switch(value)
-            {
-                case 0:
-                    break;
-                case 1:
-                    EditName(People[(int)personNum - 1]);                    
-                    break;
-                case 2:
-                    EditAge(People[(int)personNum - 1]);
-                    break;
-                default:
-                    Message.Show("Неверное значение", "Red");
-                    break;
-            }
+            if (value == (byte)EditMenuItem.Return)
+                break;
+            else if (value == (byte)EditMenuItem.Name)
+                EditName(People[(int)personNum - 1]);
+            else if (value == (byte)EditMenuItem.Age)
+                EditAge(People[(int)personNum - 1]);
+            else
+                ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
         }
     }
 
@@ -86,27 +80,36 @@
             else if (value > 0 && value <= People.Count)
                 return value;
             else
-                Message.Show("Неверное значение", "Red");
+                ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
         }
     }
 
     private static void EditName(Person person)
     {
+        Console.Clear();
         Console.Write("Введите новое имя: ");
         var newName = ConsoleRead_Write.ReadString();
         if (newName is null)
             return;
         person.Name = newName;
-        Message.Show("Изменение прошло успешно", "Green");
+        ConsoleRead_Write.WriteMessage("Изменение прошло успешно", "Green");
     }
 
     private static void EditAge(Person person)
     {
+        Console.Clear();
         Console.Write("Введите новый возраст: ");
         var newAge = ConsoleRead_Write.ReadInt();
         if (newAge is null)
             return;
         person.Age = newAge;
-        Message.Show("Изменение прошло успешно", "Green");
+        ConsoleRead_Write.WriteMessage("Изменение прошло успешно", "Green");
+    }
+
+    private enum EditMenuItem : byte
+    {
+        Return = 0,
+        Name = 1,
+        Age = 2
     }
 }
