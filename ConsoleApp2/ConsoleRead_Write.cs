@@ -27,7 +27,7 @@
     public static void WriteUser(User user)
     {
         string StringRole;
-        if (user.Role == (byte)Program.Role.ADMIN)
+        if (user.Role == Program.Role.ADMIN)
             StringRole = "Админ";
         else
             StringRole = "Пользователь";

@@ -26,21 +26,30 @@
 
     public static void Add(List<Person> People)
     {
-        Console.Clear();
         Person Person = new();
-        Console.Write("Введите имя (0 - Назад): ");
-        Person.Name = ConsoleRead_Write.ReadString();
-        if (Person.Name is null)
-            return;
-        do
+        while (true)
         {
-            Console.Write("Введите возраст (0 -  Назад): ");
-            Person.Age = ConsoleRead_Write.ReadInt();
-            if (Person.Age is null)
-                ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
-            else if (Person.Age == 0)
+            Console.Clear();
+            Console.Write("Введите имя (0 - Назад): ");
+            Person.Name = ConsoleRead_Write.ReadString();
+            if (Person.Name is null)
                 return;
-        } while (Person.Age < 1 || Person.Age > 100);
+            while (true)
+            {
+                Console.Write("Введите возраст (0 -  Назад): ");
+                Person.Age = ConsoleRead_Write.ReadInt();
+                if (Person.Age is null || Person.Age < 1 || Person.Age > 100)
+                    ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
+                else if (Person.Age == 0)
+                    return;
+                else
+                    break;
+            }
+            if (CheckRepetitions(People, Person) is true)
+                ConsoleRead_Write.WriteMessage("Такой человек уже существует", "Red");
+            else
+                break;
+        }
         ConsoleRead_Write.WriteMessage("Успешное добавление", "Green");
         People.Add(Person);
     }
@@ -64,6 +73,18 @@
             else
                 ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
         }
+    }
+
+    private static bool CheckRepetitions(List<Person> People, Person Person)
+    {
+        foreach (Person person in People)
+        {
+            if (person.Name == Person.Name && person.Age == Person.Age)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static int? SelectPerson(List<Person> People)
@@ -108,8 +129,8 @@
 
     private enum EditMenuItem : byte
     {
-        Return = 0,
-        Name = 1,
-        Age = 2
+        Return,
+        Name,
+        Age
     }
 }
