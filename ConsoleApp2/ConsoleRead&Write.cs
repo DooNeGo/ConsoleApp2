@@ -1,6 +1,6 @@
-﻿class ConsoleRead_Write : Reader
+﻿class ConsoleRead_Write : IReader
 {
-    public override int? ReadInt()
+    public static int? ReadInt()
     {
         var StringValue = Console.ReadLine();
         if (StringValue is null)
@@ -11,7 +11,7 @@
         return IntValue;
     }
 
-    public override string? ReadString()
+    public static string? ReadString()
     {
         var value = Console.ReadLine();
         if (value is "0") 
