@@ -2,9 +2,9 @@
 {
     private string? login;
     private string? password;
-    private byte? role;
+    private Program.Role role;
 
-    public User(string login = "User", string password = "User", byte role = (byte)Program.Role.USER )
+    public User(string login = "User", string password = "User", Program.Role role = Program.Role.USER )
     {
         this.login = login;
         this.password = password;
@@ -23,7 +23,7 @@
         set { password = value; }
     }
 
-    public byte? Role
+    public Program.Role Role
     {
         get { return role; }
         set { role = value; }

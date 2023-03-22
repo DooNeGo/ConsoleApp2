@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-interface IDataActions
+﻿interface IDataActions
 {
     public abstract static void Add();
     public abstract static void Remove();

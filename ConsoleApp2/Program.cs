@@ -5,19 +5,17 @@
     {
         var Users = new List<User>
         {
-            new User("admin", "admin", (byte)Role.ADMIN),
+            new User("admin", "admin", Role.ADMIN),
             new User()
         };
         List<Person> People = new();
-        var MainMenuPersonItems = new string[] { "Выход", "Добавить", "Удалить", "Изменить", "Показать" };
+        var MainMenuItems = new string[] { "Выход", "Добавить", "Удалить", "Изменить", "Показать" };
         while (true)
         {
-            ConsoleRead_Write.WriteMenu(MainMenuPersonItems);
-            if (DoPersonActions(ConsoleRead_Write.ReadInt(), People) == (byte)CodeStatus.EXIT)
+            ConsoleRead_Write.WriteMenu(MainMenuItems);
+            if (DoPersonActions(ConsoleRead_Write.ReadInt(), People) == (byte)MainMenuItem.Exit)
                 return;
-
         }
-
     }
 
     private static int? DoPersonActions(int? value, List<Person> People)
@@ -53,22 +51,16 @@
 
     public enum Role : byte
     {
-        USER = 0,
-        ADMIN = 1
-    }
-
-    public enum CodeStatus : byte
-    {
-        SUCCESS, EXIT = 0,
-        UNSUCCESS = 1,
+        USER,
+        ADMIN
     }
 
     private enum MainMenuItem : byte
     {
-        Exit = 0,
-        Add = 1,
-        Remove = 2,
-        Edit = 3,
-        Show = 4,
+        Exit,
+        Add,
+        Remove,
+        Edit,
+        Show,
     }
 }
