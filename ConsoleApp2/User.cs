@@ -1,31 +1,13 @@
-﻿internal class User
+﻿class User
 {
-    private string? login;
-    private string? password;
-    private Program.Role role;
+    public string? Login;
+    public string? Password;
+    public Program.Role Role;
 
-    public User(string login = "User", string password = "User", Program.Role role = Program.Role.USER )
+    public User(string login = "User", string password = "User", Program.Role role = Program.Role.User )
     {
-        this.login = login;
-        this.password = password;
-        this.role = role;
-    }
-
-    public string? Login
-    {
-        get { return login; }
-        set { login = value; }
-    }
-
-    public string? Password
-    {
-        get { return password; }
-        set { password = value; }
-    }
-
-    public Program.Role Role
-    {
-        get { return role; }
-        set { role = value; }
+        Login = login;
+        Password = password;
+        Role = role;
     }
 }

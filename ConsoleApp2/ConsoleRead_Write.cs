@@ -27,7 +27,7 @@
     public static void WriteUser(User user)
     {
         string StringRole;
-        if (user.Role == Program.Role.ADMIN)
+        if (user.Role == Program.Role.Admin)
             StringRole = "Админ";
         else
             StringRole = "Пользователь";
@@ -51,7 +51,7 @@
         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
     }
 
-    public static void WriteMenu(string[] MenuItems, string prefix = " ")
+    public static void WriteMenu(string[] MenuItems, string prefix = " ", string postfix = "")
     {
         Console.Clear();
         if (MenuItems.Length < 1)
@@ -61,7 +61,7 @@
         }
         for (int i = 1; i < MenuItems.Length; i++)
         {
-            Console.WriteLine($"{i} -{prefix}{MenuItems[i]}");
+            Console.WriteLine($"{i} -{prefix}{MenuItems[i]} {postfix}");
         }
         Console.WriteLine($"0 - {MenuItems[0]}");
     }
