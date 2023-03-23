@@ -2,11 +2,14 @@
 {
     public static void Remove(List<User> Users)
     {
-        var value = SelectUser(Users);
-        if (value is null)
-            return;
-        Users.RemoveAt((int)value - 1);
-        ConsoleRead_Write.WriteMessage("Успешное удаление", "Green");
+        while (true)
+        {
+            var value = SelectUser(Users);
+            if (value is null)
+                return;
+            Users.RemoveAt((int)value - 1);
+            ConsoleRead_Write.WriteMessage("Успешное удаление", "Green");
+        }
     }
 
     public static void ShowList(List<User> Users)
@@ -56,7 +59,7 @@
                 }
                 break;
             }
-            if (CheckRepetitions(Users, user) is true)
+            if (CheckRepetitions(Users, user) is not null)
                 ConsoleRead_Write.WriteMessage("Такой человек уже существует", "Red");
             else
                 break;
@@ -79,16 +82,16 @@
         }
     }
 
-    private static bool CheckRepetitions(List<User> Users, User User)
+    public static int? CheckRepetitions(List<User> Users, User user)
     {
-        foreach (var user in Users)
+        for (int i = 0; i < Users.Count; i++)
         {
-            if (user.Login == User.Login)
+            if (Users[i].Login == user.Login)
             {
-                return true;
+                return i;
             }
         }
-        return false;
+        return null;
     }
 
     private static int? SelectUser(List<User> Users)
@@ -102,7 +105,7 @@
             int? value = ConsoleRead_Write.ReadInt();
             if (value == 0)
                 return null;
-            else if (value > 0 && value <= Users.Count)
+            else if (value > 1 && value <= Users.Count)
                 return value;
             else
                 ConsoleRead_Write.WriteMessage("Неверное значение", "Red");

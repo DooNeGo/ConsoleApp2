@@ -1,4 +1,6 @@
-﻿class ConsoleRead_Write : IReader
+﻿using static Program;
+
+class ConsoleRead_Write : IReader
 {
     public static int? ReadInt()
     {
@@ -64,5 +66,36 @@
             Console.WriteLine($"{i} -{prefix}{MenuItems[i]} {postfix}");
         }
         Console.WriteLine($"0 - {MenuItems[0]}");
+    }
+
+    public static Role? DoAuthorization(List<User> Users)
+    {
+        var AuthUser = new User();
+        while (true)
+        {
+            Console.Clear();
+            Console.Write("Логин (0 - Выход): ");
+            AuthUser.Login = ReadString();
+            if (AuthUser.Login is null)
+            {
+                return null;
+            }
+            Console.Write("Пароль (0 - Выход): ");
+            AuthUser.Password = ReadString();
+            if (AuthUser.Password is null)
+            {
+                return null;
+            }
+            var status = UserActions.CheckRepetitions(Users, AuthUser);
+            if (status != null)
+            {
+                WriteMessage("Вход выполнен успешно", "Green");
+                return Users[(int)status].Role;
+            }
+            else
+            {
+                WriteMessage("Неверный логин или пароль", "Red");
+            }
+        }
     }
 }

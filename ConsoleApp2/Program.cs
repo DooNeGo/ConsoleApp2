@@ -9,26 +9,37 @@
             new User()
         };
         List<Person> People = new();
-        var StartMenuItems = new string[] { "Выход", "Пользователи", "Люди" };
         while (true)
         {
-            var status = StartMenu(StartMenuItems);
-            switch (status)
+            if (ConsoleRead_Write.DoAuthorization(Users) is null)
+                return;
+            StartMenu(Users, People);
+        }
+    }
+
+    private static void StartMenu(List<User> Users, List<Person> People)
+    {
+        var StartMenuItems = new string[] { "Разлогиниться", "Пользователи", "Люди" };
+        while (true)
+        {
+            ConsoleRead_Write.WriteMenu(StartMenuItems);
+            var value = ConsoleRead_Write.ReadInt();
+            switch (value)
             {
-                case Menu.People:
+                case (byte)Menu.People:
                     DoPersonActions(People);
                     break;
-                case Menu.Users:
+                case (byte)Menu.Users:
                     DoUserActions(Users);
                     break;
-                case Menu.Exit:
+                case (byte)Menu.Exit:
                     return;
                 default:
                     ConsoleRead_Write.WriteMessage(message: "Неверное значение", "Red");
                     break;
             }
-
         }
+
     }
 
     private static void DoPersonActions(List<Person> People)
@@ -39,9 +50,7 @@
             ConsoleRead_Write.WriteMenu(MainMenuItems);
             var value = ConsoleRead_Write.ReadInt();
             if (value is null)
-            {
                 continue;
-            }
             switch ((MainMenuItem)value)
             {
                 case MainMenuItem.Return:
@@ -80,9 +89,7 @@
             ConsoleRead_Write.WriteMenu(MainMenuItems);
             var value = ConsoleRead_Write.ReadInt();
             if (value is null)
-            {
                 continue;
-            }
             switch ((MainMenuItem)value)
             {
                 case MainMenuItem.Return:
@@ -110,29 +117,6 @@
                     ConsoleRead_Write.WriteMessage(message: "Неверное значение", "Red");
                     break;
             }
-        }
-    }
-
-    private static Menu? StartMenu(string[] StartMenuItems)
-    {
-
-        ConsoleRead_Write.WriteMenu(StartMenuItems);
-        var value = ConsoleRead_Write.ReadInt();
-        if (value is null)
-        {
-            return null;
-        }
-        switch ((Menu)value)
-        {
-            case Menu.Exit:
-                return Menu.Exit;
-            case Menu.Users:
-                return Menu.Users;
-            case Menu.People:
-                return Menu.People;
-            default:
-                ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
-                return null;
         }
     }
 
