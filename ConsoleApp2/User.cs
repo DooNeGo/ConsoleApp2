@@ -4,7 +4,7 @@
     private string? password;
     public Program.Role Role;
 
-    public User(string login = "User", string password = "User", Program.Role role = Program.Role.User )
+    public User(string login = "User", string password = "User", Program.Role role = Program.Role.User)
     {
         Login = login;
         Password = password;
@@ -17,7 +17,7 @@
         set
         {
             password = Convert.ToString(value?.GetHashCode());
-            if ( value is null )
+            if (value is null)
                 password = null;
         }
     }

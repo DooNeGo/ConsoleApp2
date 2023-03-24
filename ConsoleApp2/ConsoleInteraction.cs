@@ -1,6 +1,6 @@
 ﻿using static Program;
 
-class ConsoleRead_Write : IReader
+class ConsoleInteraction : IReader
 {
     public static int? ReadInt()
     {
@@ -21,15 +21,15 @@ class ConsoleRead_Write : IReader
         return value;
     }
 
-    public static void WritePerson(Person person)
+    public static void WriteListItem(Person Item)
     {
-        Console.WriteLine($"Имя: {person.Name}  Возраст: {person.Age}");
+        Console.WriteLine($"Имя: {Item.Name}  Возраст: {Item.Age}");
     }
 
-    public static void WriteUser(User user)
+    public static void WriteListItem(User user)
     {
         string StringRole;
-        if (user.Role == Program.Role.Admin)
+        if (user.Role == Role.Admin)
             StringRole = "Админ";
         else
             StringRole = "Пользователь";

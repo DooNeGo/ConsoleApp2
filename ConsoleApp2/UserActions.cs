@@ -1,32 +1,5 @@
-﻿class UserActions
+﻿internal class UserActions : DataActions
 {
-    public static void Remove(List<User> Users)
-    {
-        while (true)
-        {
-            var value = SelectUser(Users);
-            if (value is null)
-                return;
-            Users.RemoveAt((int)value - 1);
-            ConsoleRead_Write.WriteMessage("Успешное удаление", "Green");
-        }
-    }
-
-    public static void ShowList(List<User> Users)
-    {
-        Console.Clear();
-        if (Users.Count == 0)
-        {
-            ConsoleRead_Write.WriteMessage("Пусто...");
-            return;
-        }
-        for (int i = 0; i < Users.Count; i++)
-        {
-            Console.Write($"{i + 1}. ");
-            ConsoleRead_Write.WriteUser(Users[i]);
-        }
-    }
-
     public static void Add(List<User> Users)
     {
         User user = new();
@@ -34,17 +7,17 @@
         {
             Console.Clear();
             Console.Write("Введите логин (0 - Назад): ");
-            user.Login = ConsoleRead_Write.ReadString();
+            user.Login = ConsoleInteraction.ReadString();
             if (user.Login is null)
                 return;
             Console.Write("Введите пароль (0 - Назад): ");
-            user.Password = ConsoleRead_Write.ReadString();
+            user.Password = ConsoleInteraction.ReadString();
             if (user.Password is null)
                 return;
             while (true)
             {
                 Console.Write("Введите роль (0 - Назад 1 - Пользователь 2 - Админ): ");
-                var value = ConsoleRead_Write.ReadInt();
+                var value = ConsoleInteraction.ReadInt();
                 switch (value)
                 {
                     case 0:
@@ -54,31 +27,31 @@
                         user.Role = (Program.Role)value - 1;
                         break;
                     default:
-                        ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
+                        ConsoleInteraction.WriteMessage("Неверное значение", "Red");
                         continue;
                 }
                 break;
             }
             if (CheckRepetitions(Users, user) is not null)
-                ConsoleRead_Write.WriteMessage("Такой человек уже существует", "Red");
+                ConsoleInteraction.WriteMessage("Такой человек уже существует", "Red");
             else
                 break;
         }
-        ConsoleRead_Write.WriteMessage("Успешное добавление", "Green");
+        ConsoleInteraction.WriteMessage("Успешное добавление", "Green");
         Users.Add(user);
     }
 
     public static void Edit(List<User> Users)
     {
         var EditMenuItems = new string[] { "Назад", "Логин", "Пароль" };
-        var UserNum = SelectUser(Users);
+        var UserNum = SelectListItem(Users);
         if (UserNum is null)
             return;
         while (true)
         {
-            ConsoleRead_Write.WriteMenu(EditMenuItems, " Изменить ");
-            var value = ConsoleRead_Write.ReadInt();
-            
+            ConsoleInteraction.WriteMenu(EditMenuItems, " Изменить ");
+            var value = ConsoleInteraction.ReadInt();
+
         }
     }
 
@@ -94,24 +67,6 @@
         return null;
     }
 
-    private static int? SelectUser(List<User> Users)
-    {
-        while (true)
-        {
-            ShowList(Users);
-            if (Users.Count == 0)
-                return null;
-            Console.Write("Введите номер пользователя (0 - Назад): ");
-            int? value = ConsoleRead_Write.ReadInt();
-            if (value == 0)
-                return null;
-            else if (value > 1 && value <= Users.Count)
-                return value;
-            else
-                ConsoleRead_Write.WriteMessage("Неверное значение", "Red");
-        }
-    }
-
     private enum EditMenuItem : byte
     {
         Return,
@@ -119,5 +74,4 @@
         Password,
         Role
     }
-
 }

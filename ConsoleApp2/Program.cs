@@ -11,7 +11,7 @@
         List<Person> People = new();
         while (true)
         {
-            if (ConsoleRead_Write.DoAuthorization(Users) is null)
+            if (ConsoleInteraction.DoAuthorization(Users) is null)
                 return;
             StartMenu(Users, People);
         }
@@ -22,8 +22,8 @@
         var StartMenuItems = new string[] { "Разлогиниться", "Пользователи", "Люди" };
         while (true)
         {
-            ConsoleRead_Write.WriteMenu(StartMenuItems);
-            var value = ConsoleRead_Write.ReadInt();
+            ConsoleInteraction.WriteMenu(StartMenuItems);
+            var value = ConsoleInteraction.ReadInt();
             switch (value)
             {
                 case (byte)Menu.People:
@@ -35,7 +35,7 @@
                 case (byte)Menu.Exit:
                     return;
                 default:
-                    ConsoleRead_Write.WriteMessage(message: "Неверное значение", "Red");
+                    ConsoleInteraction.WriteMessage(message: "Неверное значение", "Red");
                     break;
             }
         }
@@ -47,8 +47,8 @@
         while (true)
         {
             var MainMenuItems = new string[] { "Назад", "Добавить", "Удалить", "Изменить", "Показать" };
-            ConsoleRead_Write.WriteMenu(MainMenuItems);
-            var value = ConsoleRead_Write.ReadInt();
+            ConsoleInteraction.WriteMenu(MainMenuItems);
+            var value = ConsoleInteraction.ReadInt();
             if (value is null)
                 continue;
             switch ((MainMenuItem)value)
@@ -75,7 +75,7 @@
                     break;
 
                 default:
-                    ConsoleRead_Write.WriteMessage(message: "Неверное значение", "Red");
+                    ConsoleInteraction.WriteMessage(message: "Неверное значение", "Red");
                     break;
             }
         }
@@ -86,8 +86,8 @@
         while (true)
         {
             var MainMenuItems = new string[] { "Назад", "Добавить", "Удалить", "Изменить", "Показать" };
-            ConsoleRead_Write.WriteMenu(MainMenuItems);
-            var value = ConsoleRead_Write.ReadInt();
+            ConsoleInteraction.WriteMenu(MainMenuItems);
+            var value = ConsoleInteraction.ReadInt();
             if (value is null)
                 continue;
             switch ((MainMenuItem)value)
@@ -114,7 +114,7 @@
                     break;
 
                 default:
-                    ConsoleRead_Write.WriteMessage(message: "Неверное значение", "Red");
+                    ConsoleInteraction.WriteMessage(message: "Неверное значение", "Red");
                     break;
             }
         }
