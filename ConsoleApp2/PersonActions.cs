@@ -1,45 +1,49 @@
 ﻿class PersonActions : DataActions
 {
-    public static void Add(List<Person> People)
+    public void Add(List<Person> People)
     {
         Person Person = new();
+        var consoleReader = new ConsoleReader();
+        var consoleWriter = new ConsoleWriter();
         while (true)
         {
             Console.Clear();
             Console.Write("Введите имя (0 - Назад): ");
-            Person.Name = ConsoleInteraction.ReadString();
+            Person.Name = consoleReader.ReadString();
             if (Person.Name is null)
                 return;
             while (true)
             {
                 Console.Write("Введите возраст (0 -  Назад): ");
-                Person.Age = ConsoleInteraction.ReadInt();
+                Person.Age = consoleReader.ReadInt();
                 if (Person.Age is null || Person.Age < 1 || Person.Age > 100)
-                    ConsoleInteraction.WriteMessage("Неверное значение", "Red");
+                    consoleWriter.WriteMessage("Неверное значение", ConsoleColor.Red);
                 else if (Person.Age == 0)
                     return;
                 else
                     break;
             }
             if (CheckRepetitions(People, Person) is true)
-                ConsoleInteraction.WriteMessage("Такой человек уже существует", "Red");
+                consoleWriter.WriteMessage("Такой человек уже существует", ConsoleColor.Red);
             else
                 break;
         }
-        ConsoleInteraction.WriteMessage("Успешное добавление", "Green");
+        consoleWriter.WriteMessage("Успешное добавление", ConsoleColor.Green);
         People.Add(Person);
     }
 
-    public static void Edit(List<Person> People)
+    public void Edit(List<Person> People)
     {
+        var consoleReader = new ConsoleReader();
+        var consoleWriter = new ConsoleWriter();
         var EditMenuItems = new string[] { "Назад", "Имя", "Возраст" };
         var personNum = SelectListItem(People);
         if (personNum is null)
             return;
         while (true)
         {
-            ConsoleInteraction.WriteMenu(EditMenuItems, " Изменить ");
-            var value = ConsoleInteraction.ReadInt();
+            consoleWriter.WriteMenu(EditMenuItems, " Изменить ");
+            var value = consoleReader.ReadInt();
             if (value == (byte)EditMenuItem.Return)
                 break;
             else if (value == (byte)EditMenuItem.Name)
@@ -47,11 +51,11 @@
             else if (value == (byte)EditMenuItem.Age)
                 EditAge(People[(int)personNum - 1]);
             else
-                ConsoleInteraction.WriteMessage("Неверное значение", "Red");
+                consoleWriter.WriteMessage("Неверное значение", ConsoleColor.Red);
         }
     }
 
-    private static bool CheckRepetitions(List<Person> People, Person Person)
+    private bool CheckRepetitions(List<Person> People, Person Person)
     {
         foreach (Person person in People)
         {
@@ -63,26 +67,30 @@
         return false;
     }
 
-    private static void EditName(Person person)
+    private void EditName(Person person)
     {
+        var consoleReader = new ConsoleReader();
+        var consoleWriter = new ConsoleWriter();
         Console.Clear();
         Console.Write("Введите новое имя: ");
-        var newName = ConsoleInteraction.ReadString();
+        var newName = consoleReader.ReadString();
         if (newName is null)
             return;
         person.Name = newName;
-        ConsoleInteraction.WriteMessage("Изменение прошло успешно", "Green");
+        consoleWriter.WriteMessage("Изменение прошло успешно", ConsoleColor.Green);
     }
 
-    private static void EditAge(Person person)
+    private void EditAge(Person person)
     {
+        var consoleReader = new ConsoleReader();
+        var consoleWriter = new ConsoleWriter();
         Console.Clear();
         Console.Write("Введите новый возраст: ");
-        var newAge = ConsoleInteraction.ReadInt();
+        var newAge = consoleReader.ReadInt();
         if (newAge is null)
             return;
         person.Age = newAge;
-        ConsoleInteraction.WriteMessage("Изменение прошло успешно", "Green");
+        consoleWriter.WriteMessage("Изменение прошло успешно", ConsoleColor.Green);
     }
 
     private enum EditMenuItem : byte

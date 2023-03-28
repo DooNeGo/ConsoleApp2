@@ -1,14 +1,20 @@
 ﻿class User
 {
-    public string? Login;
+    private string? login;
     private string? password;
-    public Program.Role Role;
+    private Program.Role role;
 
     public User(string login = "User", string password = "User", Program.Role role = Program.Role.User)
     {
-        Login = login;
+        this.login = login;
         Password = password;
-        Role = role;
+        this.role = role;
+    }
+
+    public string? Login
+    { 
+        get { return login; }
+        set { login = value; }
     }
 
     public string? Password
@@ -17,8 +23,12 @@
         set
         {
             password = Convert.ToString(value?.GetHashCode());
-            if (value is null)
-                password = null;
         }
+    }
+
+    public Program.Role Role
+    { 
+        get { return role; }
+        set { role = value; }
     }
 }

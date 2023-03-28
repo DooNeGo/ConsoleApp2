@@ -3,52 +3,54 @@
 
     private static void Main()
     {
-        var Users = new List<User>
+        var menu = new MainMenu();
+        var users = new List<User>
         {
             new User("admin", "admin", Role.Admin),
             new User()
         };
-        List<Person> People = new();
-        while (true)
-        {
-            if (ConsoleInteraction.DoAuthorization(Users) is null)
-                return;
-            StartMenu(Users, People);
-        }
+        List<Person> people = new();
+        //if (DoAuthorization(users) is null)
+        //    return;
+        menu.Process(users, people);
+        Console.ReadKey();
     }
 
-    private static void StartMenu(List<User> Users, List<Person> People)
-    {
-        var StartMenuItems = new string[] { "Разлогиниться", "Пользователи", "Люди" };
-        while (true)
-        {
-            ConsoleInteraction.WriteMenu(StartMenuItems);
-            var value = ConsoleInteraction.ReadInt();
-            switch (value)
-            {
-                case (byte)Menu.People:
-                    DoPersonActions(People);
-                    break;
-                case (byte)Menu.Users:
-                    DoUserActions(Users);
-                    break;
-                case (byte)Menu.Exit:
-                    return;
-                default:
-                    ConsoleInteraction.WriteMessage(message: "Неверное значение", "Red");
-                    break;
-            }
-        }
+    //private static void StartMenu(List<User> Users, List<Person> People)
+    //{
+    //    var StartMenuItems = new string[] { "Разлогиниться", "Пользователи", "Люди" };
+    //    while (true)
+    //    {
+    //        ConsoleReader.WriteMenu(StartMenuItems);
+    //        var value = ConsoleReader.ReadInt();
+    //        switch (value)
+    //        {
+    //            case (byte)Menu.People:
+    //                DoPersonActions(People);
+    //                break;
+    //            case (byte)Menu.Users:
+    //                DoUserActions(Users);
+    //                break;
+    //            case (byte)Menu.Exit:
+    //                return;
+    //            default:
+    //                ConsoleReader.WriteMessage(message: "Неверное значение", "Red");
+    //                break;
+    //        }
+    //    }
 
-    }
+    //}
 
     private static void DoPersonActions(List<Person> People)
     {
+        var consoleReader = new ConsoleReader();
+        var consoleWriter = new ConsoleWriter();
+        var personActioner = new PersonActions();
         while (true)
         {
             var MainMenuItems = new string[] { "Назад", "Добавить", "Удалить", "Изменить", "Показать" };
-            ConsoleInteraction.WriteMenu(MainMenuItems);
-            var value = ConsoleInteraction.ReadInt();
+            consoleWriter.WriteMenu(MainMenuItems);
+            var value = consoleReader.ReadInt();
             if (value is null)
                 continue;
             switch ((MainMenuItem)value)
@@ -57,25 +59,25 @@
                     return;
 
                 case MainMenuItem.Add:
-                    PersonActions.Add(People);
+                    personActioner.Add(People);
                     break;
 
                 case MainMenuItem.Remove:
-                    PersonActions.Remove(People);
+                    personActioner.Remove(People);
                     break;
 
                 case MainMenuItem.Edit:
-                    PersonActions.Edit(People);
+                    personActioner.Edit(People);
                     break;
 
                 case MainMenuItem.Show:
-                    PersonActions.ShowList(People);
+                    personActioner.ShowList(People);
                     Console.Write("Нажмите <Enter> для выхода... ");
                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                     break;
 
                 default:
-                    ConsoleInteraction.WriteMessage(message: "Неверное значение", "Red");
+                    consoleWriter.WriteMessage(message: "Неверное значение", ConsoleColor.Red);
                     break;
             }
         }
@@ -83,11 +85,14 @@
 
     private static void DoUserActions(List<User> Users)
     {
+        var consoleReader = new ConsoleReader();
+        var consoleWriter = new ConsoleWriter();
+        var userActioner = new UserActions();
         while (true)
         {
             var MainMenuItems = new string[] { "Назад", "Добавить", "Удалить", "Изменить", "Показать" };
-            ConsoleInteraction.WriteMenu(MainMenuItems);
-            var value = ConsoleInteraction.ReadInt();
+            consoleWriter.WriteMenu(MainMenuItems);
+            var value = consoleReader.ReadInt();
             if (value is null)
                 continue;
             switch ((MainMenuItem)value)
@@ -96,26 +101,60 @@
                     return;
 
                 case MainMenuItem.Add:
-                    UserActions.Add(Users);
+                    userActioner.Add(Users);
                     break;
 
                 case MainMenuItem.Remove:
-                    UserActions.Remove(Users);
+                    userActioner.Remove(Users);
                     break;
 
                 case MainMenuItem.Edit:
-                    UserActions.Edit(Users);
+                    userActioner.Edit(Users);
                     break;
 
                 case MainMenuItem.Show:
-                    UserActions.ShowList(Users);
+                    userActioner.ShowList(Users);
                     Console.Write("Нажмите <Enter> для выхода... ");
                     while (Console.ReadKey().Key != ConsoleKey.Enter) { }
                     break;
 
                 default:
-                    ConsoleInteraction.WriteMessage(message: "Неверное значение", "Red");
+                    consoleWriter.WriteMessage(message: "Неверное значение", ConsoleColor.Red);
                     break;
+            }
+        }
+    }
+
+    private static Role? DoAuthorization(List<User> Users)
+    {
+        var authUser = new User();
+        var reader = new ConsoleReader();
+        var writer = new ConsoleWriter();
+        var userActioner = new UserActions();
+        while (true)
+        {
+            Console.Clear();
+            Console.Write("Логин (0 - Выход): ");
+            authUser.Login = reader.ReadString();
+            if (authUser.Login is null)
+            {
+                return null;
+            }
+            Console.Write("Пароль (0 - Выход): ");
+            authUser.Password = reader.ReadString();
+            if (authUser.Password is null)
+            {
+                return null;
+            }
+            var status = userActioner.CheckRepetitions(Users, authUser);
+            if (status != null)
+            {
+                writer.WriteMessage("Вход выполнен успешно", ConsoleColor.Green);
+                return Users[(int)status].Role;
+            }
+            else
+            {
+                writer.WriteMessage("Неверный логин или пароль", ConsoleColor.Red);
             }
         }
     }

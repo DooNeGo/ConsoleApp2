@@ -1,5 +1,5 @@
-﻿interface IReader
+﻿abstract class Reader
 {
-    public abstract static string? ReadString();
-    public abstract static int? ReadInt();
+    public abstract string? ReadString();
+    public abstract int? ReadInt();
 }

@@ -1,6 +1,22 @@
-﻿internal class UserActions : DataActions
+﻿internal class AddUser : MainMenu
 {
-    public void Add(List<User> Users)
+    public AddUser(string menuItem = "Something...") : base(menuItem)
+    {
+    }
+
+    private int? CheckRepetitions(List<User> users, User user)
+    {
+        for (int i = 0; i < users.Count; i++)
+        {
+            if (users[i].Login == user.Login)
+            {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public override void Process(List<User> users, List<Person> people)
     {
         var consoleReader = new ConsoleReader();
         var consoleWriter = new ConsoleWriter();
@@ -34,48 +50,13 @@
                 }
                 break;
             }
-            if (CheckRepetitions(Users, user) is not null)
+            if (CheckRepetitions(users, user) is not null)
                 consoleWriter.WriteMessage("Такой человек уже существует", ConsoleColor.Red);
             else
                 break;
         }
         consoleWriter.WriteMessage("Успешное добавление", ConsoleColor.Green);
-        Users.Add(user);
-    }
-
-    public void Edit(List<User> Users)
-    {
-        var consoleReader = new ConsoleReader();
-        var consoleWriter = new ConsoleWriter();
-        var EditMenuItems = new string[] { "Назад", "Логин", "Пароль" };
-        var UserNum = SelectListItem(Users);
-        if (UserNum is null)
-            return;
-        while (true)
-        {
-            consoleWriter.WriteMenu(EditMenuItems, " Изменить ");
-            var value = consoleReader.ReadInt();
-
-        }
-    }
-
-    public int? CheckRepetitions(List<User> Users, User user)
-    {
-        for (int i = 0; i < Users.Count; i++)
-        {
-            if (Users[i].Login == user.Login)
-            {
-                return i;
-            }
-        }
-        return null;
-    }
-
-    private enum EditMenuItem : byte
-    {
-        Return,
-        Login,
-        Password,
-        Role
+        users.Add(user);
     }
 }
+
