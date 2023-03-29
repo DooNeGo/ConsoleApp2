@@ -1,9 +1,13 @@
-﻿abstract class DataActions<P>
+﻿using System.Linq.Expressions;
+
+abstract class DataActions<P>
 {
     public abstract P? Add();
 
-    public bool CheckRepetitions<T>(List<T> list, T newItem)
+    public bool CheckRepetitions<T>(List<T>? list, T newItem)
     {
+        if (list is null)
+            return false;
         foreach (T item in list)
         {
             if (item!.Equals(newItem))
@@ -12,11 +16,11 @@
         return false;
     }
 
-    public bool ShowList<T>(List<T> list)
+    public bool ShowList<T>(List<T>? list)
     {
         var consoleWriter = new ConsoleWriter();
         Console.Clear();
-        if (list.Count == 0)
+        if (list is null || list.Count == 0)
         {
             consoleWriter.WriteMessage("Empty...");
             return false;

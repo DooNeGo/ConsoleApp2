@@ -1,6 +1,6 @@
-﻿internal class AddUser : MainMenu
+﻿internal class AddUser : UserMainMenu
 {
-    public AddUser(List<User>? users, string menuItem = "Add") : base(menuItem: menuItem, users:users)
+    public AddUser(List<User>? users, string menuItem = "Add") : base(users, menuItem)
     { }
 
     public override void Process()

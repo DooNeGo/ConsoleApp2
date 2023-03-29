@@ -29,21 +29,5 @@
         Console.WriteLine("Нажмите <Enter> для выхода... ");
         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
     }
-
-    public void WriteMenu(string[] menuItems, string prefix = " ", string postfix = "")
-    {
-        Console.Clear();
-        if (menuItems.Length < 1)
-        {
-            Console.WriteLine("There is no menu items");
-            return;
-        }
-        for (int i = 1; i < menuItems.Length; i++)
-        {
-            Console.WriteLine($"{i} -{prefix}{menuItems[i]} {postfix}");
-        }
-        Console.WriteLine($"0 - {menuItems[0]}");
-    }
-
 }
 

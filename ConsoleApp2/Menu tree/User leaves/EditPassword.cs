@@ -1,10 +1,21 @@
-﻿internal class EditPassword : MainMenu
+﻿internal class EditPassword : EditTool<User>
 {
-    public EditPassword(string menuItem = "Edit password") : base(menuItem: menuItem)
-    { }
-
-    public override void Process()
+    public EditPassword(int? index, List<User>? list, string menuItem = "Edit password") : base(index, list, menuItem)
     {
-        
+    }
+
+    protected override bool EditField()
+    {
+        var userActions = new UserActions();
+        var passwordNew = userActions.GetPassword();
+        if (passwordNew is null)
+            return false;
+        list![(int)Index].Password = passwordNew;
+        return true;
+    }
+
+    protected override void UpdateChildrens()
+    {
+        throw new NotImplementedException();
     }
 }

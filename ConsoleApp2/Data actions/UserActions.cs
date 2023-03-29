@@ -1,21 +1,5 @@
 ﻿internal class UserActions : DataActions<User>
 {
-    public void Edit(List<User> Users)
-    {
-        var consoleReader = new ConsoleReader();
-        var consoleWriter = new ConsoleWriter();
-        var EditMenuItems = new string[] { "Назад", "Логин", "Пароль" };
-        var UserNum = SelectListItem(Users);
-        if (UserNum is null)
-            return;
-        while (true)
-        {
-            consoleWriter.WriteMenu(EditMenuItems, " Изменить ");
-            var value = consoleReader.ReadInt();
-
-        }
-    }
-
     public int? FindUser(List<User> Users, User user)
     {
         for (int i = 0; i < Users.Count; i++)
@@ -45,21 +29,21 @@
 
     }
 
-    private string? GetLogin()
+    public string? GetLogin()
     {
         var consoleReader = new ConsoleReader();
         Console.Write("Enter login (0 - Return): ");
         return consoleReader.ReadString();
     }
 
-    private string? GetPassword()
+    public string? GetPassword()
     {
         var consoleReader = new ConsoleReader();
         Console.Write("Enter password (0 - Return): ");
         return consoleReader.ReadString();
     }
 
-    private Program.Role? GetRole()
+    public Program.Role? GetRole()
     {
         var consoleReader = new ConsoleReader();
         var consoleWriter = new ConsoleWriter();
@@ -80,13 +64,5 @@
             }
         }
 
-    }
-
-    private enum EditMenuItem : byte
-    {
-        Return,
-        Login,
-        Password,
-        Role
     }
 }

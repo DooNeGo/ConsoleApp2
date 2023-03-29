@@ -1,25 +1,15 @@
-﻿internal class PersonControlMenu : MainMenu
+﻿internal class PersonControlMenu : ControlMenu<Person>
 {
-    private readonly Person? person;
-
-    public PersonControlMenu(Person? person, List<Person>? people, string menuItem = "Control menu") : base(people, menuItem:menuItem)
-    {
-        this.person = person;
-    }
+    public PersonControlMenu(List<Person>? people, int? index, string menuItem = "Control menu") : base(people, index, menuItem)
+    { }
 
     protected override void UpdateChildrens()
     {
-
-        childrens = new Dictionary<int, MainMenu>()
+        childrens = new Dictionary<int, Menu>()
         {
-            { 1, new EditName(people!.BinarySearch(person!), people)},
-            { 2, new EditAge(people!.BinarySearch(person!), people) },
-            { 3, new RemovePerson(Person, people) },
+            { 1, new EditName(Index, items)},
+            { 2, new EditAge(Index, items) },
+            { 3, new Remove<Person>(items, Index) },
         };
-    }
-
-    public Person? Person
-    { 
-        get { return person; } 
     }
 }

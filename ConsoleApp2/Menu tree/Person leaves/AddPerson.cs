@@ -1,6 +1,6 @@
-﻿internal class AddPerson : MainMenu
+﻿internal class AddPerson : PersonMainMenu
 {
-    public AddPerson(List<Person>? people, string menuItem = "Add") : base(people, menuItem: menuItem)
+    public AddPerson(List<Person>? people, string menuItem = "Add") : base(people, menuItem)
     { }
 
     public override void Process()
@@ -12,7 +12,7 @@
             var newPerson = personActions.Add();
             if (newPerson == null)
                 return;
-            if (personActions.CheckRepetitions(people!, newPerson) is false)
+            if (personActions.CheckRepetitions(people, newPerson) is false)
             {
                 people?.Add(newPerson);
                 consoleWriter.WriteMessage("Successful add", ConsoleColor.Green);

@@ -1,6 +1,6 @@
-﻿internal class ShowUsersList : MainMenu
+﻿internal class ShowUsersList : UserMainMenu
 {
-    public ShowUsersList(List<User> users, string menuItem = "Show") : base(menuItem: menuItem, users:users)
+    public ShowUsersList(List<User>? users, string menuItem = "Show") : base(users, menuItem)
     { }
 
     public override void Process()

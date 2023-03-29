@@ -1,11 +1,7 @@
-﻿internal class EditName : MainMenu
+﻿internal class EditName : EditTool<Person>
 {
-    private readonly int? index;
-
-    public EditName(int? index, List<Person>? people, string menuItem = "Edit name") : base(people, menuItem:menuItem) 
-    {
-        this.index = index;
-    }
+    public EditName(int? index, List<Person>? people, string menuItem = "Edit name") : base(index, people, menuItem)
+    { }
 
     public override void Process()
     {
@@ -13,21 +9,23 @@
         if (Index is null)
             return;
         Console.Clear();
-        EditField();
-        consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
+        if (EditField() is true)
+            consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
     }
 
-    protected virtual void EditField()
+    protected override bool EditField()
     {
         var personActions = new PersonActions();
         string? newName = personActions.GetName();
         if (newName is null)
-            return;
-        people![(int)Index].Name = newName;
+            return false;
+        list![(int)Index].Name = newName;
+        return true;
     }
 
-    protected int? Index
-    { 
-        get { return index; }
-    }
+    protected override void UpdateChildrens()
+    { }
+
+    protected override void ShowMenuItems()
+    { }
 }
