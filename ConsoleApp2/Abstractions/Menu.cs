@@ -1,7 +1,8 @@
-﻿abstract class Menu
+﻿abstract class Menu<T>
 {
-    private protected string menuItem;
-    protected Dictionary<int, MainMenu> childrens;
-    private protected abstract void MakeChildrens();
-    public abstract void Process(List<User> users, List<Person> people);
+    protected Dictionary<int, T>? childrens;
+    protected string? menuItem;
+    protected abstract void UpdateChildrens();
+    protected abstract void ShowMenuItems();
+    public abstract void Process();
 }

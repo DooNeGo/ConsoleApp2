@@ -1,6 +1,4 @@
-﻿using static Program;
-
-internal class ConsoleWriter : Writer
+﻿internal class ConsoleWriter : Writer
 {
     public override bool WriteListItem<T>(T item)
     {
@@ -8,24 +6,18 @@ internal class ConsoleWriter : Writer
         {
             return false;
         }
-        else if (typeof(T) == typeof(Person))
+        if (item is Person person)
         {
-            Person person = item as Person;
-            Console.WriteLine($"Имя: {person.Name}  Возраст: {person.Age}");
+            Console.WriteLine($"Имя: {person?.Name}  Возраст: {person?.Age}");
             return true;
         }
-        else if (typeof(T) == typeof(User))
+        else if (item is User user)
         {
-            User user = item as User;
-            string roleString;
-            if (user.Role == Role.Admin)
-                roleString = "Админ";
-            else
-                roleString = "Пользователь";
-            Console.WriteLine($"Логин: {user.Login}  Пароль: {user.Password}  Роль: {roleString}");
+            Console.WriteLine($"Логин: {user?.Login}  Пароль: {user?.Password}  Роль: {user?.Role}");
             return true;
         }
-        return false;
+        else
+            throw new Exception();            
     }
 
     public void WriteMessage(string message, ConsoleColor color = ConsoleColor.White)
@@ -34,7 +26,7 @@ internal class ConsoleWriter : Writer
         Console.ForegroundColor = color;
         Console.WriteLine(message);
         Console.ResetColor();
-        Console.Write("Нажмите <Enter> для выхода... ");
+        Console.WriteLine("Нажмите <Enter> для выхода... ");
         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
     }
 

@@ -1,38 +1,37 @@
-﻿internal class MainMenu : Menu
+﻿internal class MainMenu : Menu<MainMenu>
 {
-    private protected string menuItem;
-    protected Dictionary<int, MainMenu> childrens;
+    protected List<Person>? people;
+    protected List<User>? users;
 
-    public MainMenu(string menuItem = "Something...")
+    public MainMenu(List<Person>? people = null, List<User>? users = null, string menuItem = "Main menu")
     {
         this.menuItem = menuItem;
+        this.people = people;
+        this.users = users;
     }
 
-    private protected override void MakeChildrens()
+    protected override void UpdateChildrens()
     {
         childrens = new Dictionary<int, MainMenu>()
         {
-            { 1, new UserMainMenu("User") },
-            { 2, new PersonMainMenu("Person") },
+            { 1, new UserMainMenu(users) },
+            { 2, new PersonMainMenu(people) },
         };
     }
 
-    public override void Process(List<User> users, List<Person> people)
+    public override void Process()
     {
         var consoleReader = new ConsoleReader();
         var consoleWriter = new ConsoleWriter();
-        MakeChildrens();
         while (true)
         {
             Console.Clear();
-            for (int i = 1; i <= childrens?.Count; i++)
-            {
-                Console.WriteLine($"{i} - {childrens[i].MenuItem}");
-            }
-            Console.WriteLine("0 - Return");
+            Console.WriteLine($"-----{MenuItem}-----");
+            UpdateChildrens();
+            ShowMenuItems();
             var value = consoleReader.ReadInt();
-            if (value > 0 && value <= childrens?.Count)
-                childrens?[(int)value].Process(users, people);
+            if (value > 0 && value <= childrens!.Count)
+                childrens[(int)value].Process();
             else if (value == 0)
                 break;
             else
@@ -40,9 +39,17 @@
         }
     }
 
-    public string MenuItem
+    protected override void ShowMenuItems()
+    {
+        for (int i = 1; i <= childrens!.Count; i++)
+        {
+            Console.WriteLine($"{i} - {childrens[i].MenuItem}");
+        }
+        Console.WriteLine("0 - Return");
+    }
+
+    public string? MenuItem
     {
         get { return menuItem; }
     }
 }
-
