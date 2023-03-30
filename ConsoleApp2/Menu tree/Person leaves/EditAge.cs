@@ -9,12 +9,7 @@
         var ageNew = personActions.GetAge();
         if (ageNew is null || ageNew == 0)
             return false;
-        list![(int)Index!].Age = ageNew;
+        items![(int)Index!].Age = ageNew;
         return true;
-    }
-
-    protected override void UpdateChildrens()
-    {
-        throw new NotImplementedException();
     }
 }

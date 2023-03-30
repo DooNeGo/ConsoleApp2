@@ -8,9 +8,9 @@
     public override void Process()
     {
         var consoleWriter = new ConsoleWriter();
-        if (Index is null)
+        if (HasErrors())
             return;
-        items!.RemoveAt((int)Index);
+        items!.RemoveAt((int)Index!);
         consoleWriter.WriteMessage("Successful delete", ConsoleColor.Green);
     }
 

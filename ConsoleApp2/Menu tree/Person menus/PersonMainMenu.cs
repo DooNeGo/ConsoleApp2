@@ -9,9 +9,7 @@
     {
         childrens = new Dictionary<int, Menu>()
         {
-            { 1, new AddPerson(people) },
-            { 2, new ShowList<Person>(people) },
-            { 3, new PersonSelectionMenu(people) },
+            { 1, new ShowList<Person>(people) },
         };
     }
 }

@@ -1,17 +1,19 @@
 ﻿abstract class Menu
 {
     protected Dictionary<int, Menu>? childrens;
-    protected string? menuItem;
+    private readonly string? menuItem;
     protected abstract void UpdateChildrens();
+    protected abstract bool HasErrors();
 
     public Menu(string? menuItem)
     {
         this.menuItem = menuItem;
     }
 
-    protected virtual void ShowMenuItems()
+    protected virtual void ShowChildrens()
     {
-        for (int i = 1; i <= childrens!.Count; i++)
+        Console.WriteLine($"-----{MenuItem}-----");
+        for (int i = 1; i <= childrens?.Count; i++)
         {
             Console.WriteLine($"{i} - {childrens[i].MenuItem}");
         }
@@ -25,9 +27,10 @@
         while (true)
         {
             Console.Clear();
-            Console.WriteLine($"-----{MenuItem}-----");
+            if (HasErrors())
+                return;
             UpdateChildrens();
-            ShowMenuItems();
+            ShowChildrens();
             var value = consoleReader.ReadInt();
             if (value > 0 && value <= childrens!.Count)
                 childrens[(int)value].Process();

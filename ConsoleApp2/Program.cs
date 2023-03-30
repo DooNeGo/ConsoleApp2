@@ -7,11 +7,30 @@
             new User("admin", "admin", Role.Admin),
             new User()
         };
-        List<Person> people = new();
-        var menu = new MainMenu(people, users);
-        //if (DoAuthorization(users) is null)
-        //    return;
-        menu.Process();
+        List<Person> people = new()
+        {
+            new Person("Bob", 23),
+            new Person("Stas :)"),
+            new Person("Matvey supercalifragilisticexpialidocious programmer")
+        };
+        while (true)
+        {
+            var role = DoAuthorization(users);
+            if (role is null)
+            {
+                return;
+            }
+            else if (role is Role.Admin)
+            {
+                var extendMenu = new ExtendMainMenu(people, users);
+                extendMenu.Process();
+            }
+            else
+            {
+                var menu = new MainMenu(people, users);
+                menu.Process();
+            }
+        }
     }
 
     private static Role? DoAuthorization(List<User> Users)
@@ -23,9 +42,9 @@
         while (true)
         {
             Console.Clear();
-            Console.Write("Login (0 - Exit): ");
-            authUser.Login = consoleReader.ReadString();
-            if (authUser.Login is null)
+            Console.Write("Username (0 - Exit): ");
+            authUser.Username = consoleReader.ReadString();
+            if (authUser.Username is null)
             {
                 return null;
             }
@@ -38,12 +57,12 @@
             var status = userActions.FindUser(Users, authUser);
             if (status != null)
             {
-                consoleWriter.WriteMessage("Вход выполнен успешно", ConsoleColor.Green);
+                consoleWriter.WriteMessage("Login Successful", ConsoleColor.Green);
                 return Users[(int)status].Role;
             }
             else
             {
-                consoleWriter.WriteMessage("Wrong login or password", ConsoleColor.Red);
+                consoleWriter.WriteMessage("Wrong username or password", ConsoleColor.Red);
             }
         }
     }

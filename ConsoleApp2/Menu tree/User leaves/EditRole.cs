@@ -9,12 +9,7 @@
         var roleNew = userActions.GetRoleFromConsole();
         if (roleNew is null)
             return false;
-        list![(int)Index!].Role = roleNew;
+        items![(int)Index!].Role = roleNew;
         return true;
-    }
-
-    protected override void UpdateChildrens()
-    {
-        throw new NotImplementedException();
     }
 }

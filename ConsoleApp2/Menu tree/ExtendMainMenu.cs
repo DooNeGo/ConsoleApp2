@@ -1,12 +1,12 @@
-﻿internal class MainMenu : Menu
+﻿internal class ExtendMainMenu : Menu
 {
     protected List<Person>? people;
     protected List<User>? users;
 
-    public MainMenu(string menuItem = "Main menu") : base(menuItem)
+    public ExtendMainMenu(string menuItem = "Main menu") : base(menuItem)
     { }
 
-    public MainMenu(List<Person>? people, List<User>? users, string menuItem = "Main menu") : base(menuItem)
+    public ExtendMainMenu(List<Person>? people, List<User>? users, string menuItem = "Main menu") : base(menuItem)
     {
         this.people = people;
         this.users = users;
@@ -23,7 +23,8 @@
     {
         childrens = new Dictionary<int, Menu>()
         {
-            { 1, new PersonMainMenu(people) },
+            { 1, new ExtendUserMainMenu(users) },
+            { 2, new ExtendPersonMainMenu(people) },
         };
     }
 }

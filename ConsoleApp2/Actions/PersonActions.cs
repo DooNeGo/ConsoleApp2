@@ -1,6 +1,6 @@
 ﻿class PersonActions : DataActions<Person>
 {
-    public override Person? AddUser()
+    public override Person? AddNewListItem()
     {
         Person person = new();
         Console.Clear();
@@ -25,7 +25,7 @@
                 return name;
             else
                 consoleWriter.WriteMessage("Please, enter a name", ConsoleColor.Red);
-        }        
+        }
     }
 
     public int? GetAge()

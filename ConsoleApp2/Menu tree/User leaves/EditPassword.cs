@@ -9,12 +9,7 @@
         var passwordNew = userActions.GetPasswordFromConsole();
         if (passwordNew is null)
             return false;
-        list![(int)Index!].Password = passwordNew;
+        items![(int)Index!].Password = passwordNew;
         return true;
-    }
-
-    protected override void UpdateChildrens()
-    {
-        throw new NotImplementedException();
     }
 }

@@ -9,12 +9,7 @@
         string? newName = personActions.GetName();
         if (newName is null)
             return false;
-        list![(int)Index!].Name = newName;
+        items![(int)Index!].Name = newName;
         return true;
-    }
-
-    protected override void UpdateChildrens()
-    {
-        throw new NotImplementedException();
     }
 }

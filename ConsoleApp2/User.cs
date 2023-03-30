@@ -1,20 +1,20 @@
 ﻿internal class User
 {
-    private string? login;
+    private string? username;
     private string? password;
     private Program.Role? role;
 
-    public User(string login = "User", string password = "User", Program.Role role = Program.Role.User)
+    public User(string username = "user", string password = "", Program.Role role = Program.Role.User)
     {
-        this.login = login;
+        this.username = username;
         Password = password;
         this.role = role;
     }
 
-    public string? Login
+    public string? Username
     { 
-        get { return login; }
-        set { login = value; }
+        get { return username; }
+        set { username = value; }
     }
 
     public string? Password
@@ -35,11 +35,11 @@
     public override bool Equals(object? obj)
     {
         return obj is User user &&
-               Login == user.Login;
+               Username == user.Username;
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Login, Password, Role);
+        return HashCode.Combine(Username, Password, Role);
     }
 }

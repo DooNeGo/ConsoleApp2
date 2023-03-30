@@ -14,32 +14,12 @@
         get { return index; }
     }
 
-    private bool IsListCountChanged()
+    protected override bool HasErrors()
     {
-        if (items?.Count != listCount)
+        if (items is null || index is null)
+            return true;
+        if (items.Count != listCount)
             return true;
         return false;
-    }
-
-    public override void Process()
-    {
-        var consoleReader = new ConsoleReader();
-        var consoleWriter = new ConsoleWriter();
-        while (true)
-        {
-            if (IsListCountChanged() is true)
-                return;
-            Console.Clear();
-            Console.WriteLine($"-----{MenuItem}-----");
-            UpdateChildrens();
-            ShowMenuItems();
-            var value = consoleReader.ReadInt();
-            if (value > 0 && value <= childrens!.Count)
-                childrens[(int)value].Process();
-            else if (value == 0)
-                break;
-            else
-                consoleWriter.WriteMessage("Wrong number", ConsoleColor.Red);
-        }
     }
 }

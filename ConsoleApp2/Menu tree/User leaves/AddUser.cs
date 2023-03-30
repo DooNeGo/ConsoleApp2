@@ -1,4 +1,4 @@
-﻿internal class AddUser : UserMainMenu
+﻿internal class AddUser : ExtendUserMainMenu
 {
     public AddUser(List<User>? users, string menuItem = "Add") : base(users, menuItem)
     { }
@@ -9,17 +9,19 @@
         var consoleWriter = new ConsoleWriter();
         while (true)
         {
-            var newUser = userActions.AddUser();
+        if (HasErrors())
+            return;
+            var newUser = userActions.AddNewListItem();
             if (newUser is null)
                 return;
-            if (userActions.CheckRepetitions(users!, newUser) is false)
+            if (userActions.CheckRepetitions(users, newUser) is false)
             {
                 users?.Add(newUser);
                 consoleWriter.WriteMessage("Success", ConsoleColor.Green);
             }
             else
             {
-                consoleWriter.WriteMessage("This person already exist", ConsoleColor.Red);
+                consoleWriter.WriteMessage("This user already exist", ConsoleColor.Red);
             }
         }
     }

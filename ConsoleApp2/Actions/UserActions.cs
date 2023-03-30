@@ -4,7 +4,7 @@
     {
         for (int i = 0; i < Users.Count; i++)
         {
-            if (Users[i].Login == user.Login)
+            if (Users[i].Username == user.Username)
             {
                 return i;
             }
@@ -12,12 +12,12 @@
         return null;
     }
 
-    public override User? AddUser()
+    public override User? AddNewListItem()
     {
         User user = new();
         Console.Clear();
-        user.Login = GetLoginFromConsole();
-        if (user.Login is null)
+        user.Username = GetUsenameFromConsole();
+        if (user.Username is null)
             return null;
         user.Password = GetPasswordFromConsole();
         if (user.Password is null)
@@ -29,18 +29,18 @@
 
     }
 
-    public string? GetLoginFromConsole()
+    public string? GetUsenameFromConsole()
     {
         while (true)
         {
             var consoleReader = new ConsoleReader();
             var consoleWriter = new ConsoleWriter();
-            Console.Write("Enter login (0 - Return): ");
+            Console.Write("Enter username (0 - Return): ");
             var login = consoleReader.ReadString();
             if (login != "")
                 return login;
             else
-                consoleWriter.WriteMessage("Please, enter a login", ConsoleColor.Red);
+                consoleWriter.WriteMessage("Please, enter an username", ConsoleColor.Red);
         }
     }
 

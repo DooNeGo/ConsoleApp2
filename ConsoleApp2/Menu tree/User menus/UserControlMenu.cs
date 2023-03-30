@@ -7,7 +7,7 @@
     {
         childrens = new Dictionary<int, Menu>()
         {
-            { 1, new EditLogin(Index, items)},
+            { 1, new EditUsername(Index, items)},
             { 2, new EditPassword(Index, items) },
             { 3, new EditRole(Index, items) },
             { 4, new Remove<User>(items, Index) }

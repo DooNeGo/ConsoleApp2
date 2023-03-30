@@ -1,6 +1,6 @@
-﻿internal class ConsoleWriter : Writer
+﻿internal class ConsoleWriter : IWriter
 {
-    public override bool WriteListItem<T>(T item)
+    public bool WriteListItem<T>(T item)
     {
         if (item is null)
         {
@@ -13,7 +13,7 @@
         }
         else if (item is User user)
         {
-            Console.WriteLine($"Логин: {user?.Login}  Пароль: {user?.Password}  Роль: {user?.Role}");
+            Console.WriteLine($"Логин: {user?.Username}  Пароль: {user?.Password}  Роль: {user?.Role}");
             return true;
         }
         else

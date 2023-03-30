@@ -1,8 +1,6 @@
-﻿using System.Linq.Expressions;
-
-abstract class DataActions<P>
+﻿abstract class DataActions<P>
 {
-    public abstract P? AddUser();
+    public abstract P? AddNewListItem();
 
     public bool CheckRepetitions<T>(List<T>? list, T newItem)
     {
@@ -20,9 +18,10 @@ abstract class DataActions<P>
     {
         var consoleWriter = new ConsoleWriter();
         Console.Clear();
+        Console.WriteLine($"-----List-----");
         if (list is null || list.Count == 0)
         {
-            consoleWriter.WriteMessage("Empty...");
+            Console.WriteLine("Empty...");
             return false;
         }
         for (int i = 0; i < list.Count; i++)

@@ -1,8 +1,8 @@
-﻿class ConsoleReader : Reader
+﻿class ConsoleReader : IReader
 {
-    public override int? ReadInt() => int.TryParse(Console.ReadLine(), out var result) ? result : null;
+    public int? ReadInt() => int.TryParse(Console.ReadLine(), out var result) ? result : null;
 
-    public override string? ReadString()
+    public string? ReadString()
     {
         var value = Console.ReadLine();
         if (value is "0")
