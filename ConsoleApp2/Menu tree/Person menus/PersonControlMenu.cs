@@ -1,6 +1,6 @@
 ﻿internal class PersonControlMenu : ControlMenu<Person>
 {
-    public PersonControlMenu(List<Person>? people, int? index, string menuItem = "Control menu") : base(people, index, menuItem)
+    public PersonControlMenu(int? index, string menuItem = "Control menu") : base(index, menuItem)
     { }
 
     protected override void UpdateChildrens()

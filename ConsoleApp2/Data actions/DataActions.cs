@@ -2,7 +2,7 @@
 
 abstract class DataActions<P>
 {
-    public abstract P? Add();
+    public abstract P? AddUser();
 
     public bool CheckRepetitions<T>(List<T>? list, T newItem)
     {
@@ -36,38 +36,5 @@ abstract class DataActions<P>
                 throw new Exception();
         }
         return true;
-    }
-
-    public void Remove<T>(List<T> list)
-    {
-        var consoleWriter = new ConsoleWriter();
-        while (true)
-        {
-            var value = SelectListItem(list);
-            if (value is null)
-                return;
-            list.RemoveAt((int)value - 1);
-            consoleWriter.WriteMessage("Success", ConsoleColor.Green);
-        }
-    }
-
-    public int? SelectListItem<T>(List<T> list)
-    {
-        var consoleWriter = new ConsoleWriter();
-        var consoleReader = new ConsoleReader();
-        while (true)
-        {
-            ShowList(list);
-            if (list.Count == 0)
-                return null;
-            Console.Write("Enter number (0 - Назад): ");
-            int? value = consoleReader.ReadInt();
-            if (value == 0)
-                return null;
-            else if (value > 1 && value <= list.Count)
-                return value;
-            else
-                consoleWriter.WriteMessage("Wrong number", ConsoleColor.Red);
-        }
     }
 }

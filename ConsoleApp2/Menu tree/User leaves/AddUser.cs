@@ -9,7 +9,7 @@
         var consoleWriter = new ConsoleWriter();
         while (true)
         {
-            var newUser = userActions.Add();
+            var newUser = userActions.AddUser();
             if (newUser is null)
                 return;
             if (userActions.CheckRepetitions(users!, newUser) is false)

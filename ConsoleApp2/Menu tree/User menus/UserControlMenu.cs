@@ -1,6 +1,6 @@
 ﻿internal class UserControlMenu : ControlMenu<User>
 {
-    public UserControlMenu(List<User>? items, int? index, string menuItem = "Control menu") : base(items, index, menuItem)
+    public UserControlMenu(int? index, string menuItem = "Control menu") : base(index, menuItem)
     { }
 
     protected override void UpdateChildrens()

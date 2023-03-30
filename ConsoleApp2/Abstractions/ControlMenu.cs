@@ -1,14 +1,12 @@
 ﻿abstract class ControlMenu<T> : Menu
 {
     private readonly int? index;
-    protected static List<T>? items;
-    private static int? listCount;
+    public static List<T>? items;
+    public static int? listCount;
 
-    protected ControlMenu(List<T>? items, int? index, string? menuItem) : base(menuItem)
+    protected ControlMenu(int? index, string? menuItem) : base(menuItem)
     {
-        ControlMenu<T>.items = items;
         this.index = index;
-        ControlMenu<T>.listCount = items?.Count;
     }
 
     public int? Index
@@ -29,9 +27,9 @@
         var consoleWriter = new ConsoleWriter();
         while (true)
         {
-            Console.Clear();
             if (IsListCountChanged() is true)
                 return;
+            Console.Clear();
             Console.WriteLine($"-----{MenuItem}-----");
             UpdateChildrens();
             ShowMenuItems();

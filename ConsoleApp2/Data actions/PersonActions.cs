@@ -1,6 +1,6 @@
 ﻿class PersonActions : DataActions<Person>
 {
-    public override Person? Add()
+    public override Person? AddUser()
     {
         Person person = new();
         Console.Clear();
@@ -15,9 +15,17 @@
 
     public string? GetName()
     {
-        var consoleReader = new ConsoleReader();
-        Console.Write("Enter name (0 - Return): ");
-        return consoleReader.ReadString();
+        while (true)
+        {
+            var consoleReader = new ConsoleReader();
+            var consoleWriter = new ConsoleWriter();
+            Console.Write("Enter a name (0 - Return): ");
+            var name = consoleReader.ReadString();
+            if (name != "")
+                return name;
+            else
+                consoleWriter.WriteMessage("Please, enter a name", ConsoleColor.Red);
+        }        
     }
 
     public int? GetAge()
@@ -26,7 +34,7 @@
         var consoleWriter = new ConsoleWriter();
         while (true)
         {
-            Console.Write("Enter age (0 - Return): ");
+            Console.Write("Enter the age (0 - Return): ");
             var value = consoleReader.ReadInt();
             if (value is null || value < 0 || value > 100)
                 consoleWriter.WriteMessage("Wrong number", ConsoleColor.Red);

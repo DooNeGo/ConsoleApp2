@@ -11,9 +11,9 @@
 
     public override void Process()
     {
-        var consoleWriter = new ConsoleWriter();
         if (Index is null)
             return;
+        var consoleWriter = new ConsoleWriter();
         Console.Clear();
         if (EditField() is true)
             consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);

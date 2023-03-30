@@ -4,11 +4,11 @@
     {
         var users = new List<User>
         {
-            new User("admin", "admin"),
+            new User("admin", "admin", Role.Admin),
             new User()
         };
         List<Person> people = new();
-        var menu = new MainMenu(people:people, users:users);
+        var menu = new MainMenu(people, users);
         //if (DoAuthorization(users) is null)
         //    return;
         menu.Process();

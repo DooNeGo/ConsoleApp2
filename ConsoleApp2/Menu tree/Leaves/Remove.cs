@@ -1,7 +1,9 @@
 ﻿internal class Remove<T> : ControlMenu<T>
 {
-    public Remove(List<T>? items, int? index, string menuItem = "Remove") : base(items, index, menuItem)
-    { }
+    public Remove(List<T>? items, int? index, string menuItem = "Remove") : base(index, menuItem)
+    {
+        Remove<T>.items = items;
+    }
 
     public override void Process()
     {

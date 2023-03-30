@@ -9,7 +9,7 @@
         var ageNew = personActions.GetAge();
         if (ageNew is null || ageNew == 0)
             return false;
-        list![(int)Index].Age = ageNew;
+        list![(int)Index!].Age = ageNew;
         return true;
     }
 
