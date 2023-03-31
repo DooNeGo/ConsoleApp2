@@ -26,10 +26,12 @@
         var consoleWriter = new ConsoleWriter();
         while (true)
         {
-            Console.Clear();
+            UpdateChildrens();
+            if (childrens!.Count == 1)
+                childrens[1].Process();
             if (HasErrors())
                 return;
-            UpdateChildrens();
+            Console.Clear();
             ShowChildrens();
             var value = consoleReader.ReadInt();
             if (value > 0 && value <= childrens!.Count)

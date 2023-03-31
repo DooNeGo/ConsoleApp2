@@ -22,4 +22,16 @@
             return true;
         return false;
     }
+
+    protected override void ShowChildrens()
+    {
+        var consoleWriter = new ConsoleWriter();
+        Console.WriteLine($"-----{MenuItem}-----");
+        consoleWriter.WriteListItem(items![(int)Index!]);
+        for (int i = 1; i <= childrens!.Count; i++)
+        {
+            Console.WriteLine($"{i} - {childrens[i].MenuItem}");
+        }
+        Console.WriteLine("0 - Return");
+    }
 }

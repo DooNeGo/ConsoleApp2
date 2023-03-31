@@ -8,12 +8,12 @@
         }
         if (item is Person person)
         {
-            Console.WriteLine($"Имя: {person?.Name}  Возраст: {person?.Age}");
+            Console.WriteLine($"Name: {person?.Name}  Age: {person?.Age}");
             return true;
         }
         else if (item is User user)
         {
-            Console.WriteLine($"Логин: {user?.Username}  Пароль: {user?.Password}  Роль: {user?.Role}");
+            Console.WriteLine($"Username: {user?.Username}  Role: {user?.Role}");
             return true;
         }
         else

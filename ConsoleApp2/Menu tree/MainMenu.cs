@@ -16,6 +16,8 @@
     {
         if (people is null && users is null)
             return true;
+        if (childrens!.Count == 1)
+            return true;
         return false;
     }
 

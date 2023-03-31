@@ -9,7 +9,7 @@
 
     protected override bool HasErrors()
     {
-        if (items is null)
+        if (items is null || items.Count == 1)
             return true;
         return false;
     }

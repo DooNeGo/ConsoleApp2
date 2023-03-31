@@ -4,7 +4,7 @@
     {
         for (int i = 0; i < Users.Count; i++)
         {
-            if (Users[i].Username == user.Username)
+            if (Users[i].Username == user.Username && Users[i].Password == user.Password)
             {
                 return i;
             }
