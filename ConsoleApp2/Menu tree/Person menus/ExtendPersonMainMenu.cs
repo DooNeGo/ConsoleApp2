@@ -19,6 +19,7 @@
         {
             { 1, new AddPerson(people) },
             { 2, new PersonSelectionMenu(people) },
+            { 3, new PersonSearchMenu(people) },
         };
     }
 }

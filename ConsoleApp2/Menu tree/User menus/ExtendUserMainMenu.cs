@@ -11,6 +11,7 @@
         {
             { 1, new AddUser(users) },
             { 2, new UserSelectionMenu(users) },
+            { 3, new UserSearchMenu(users) },
         };
     }
 }

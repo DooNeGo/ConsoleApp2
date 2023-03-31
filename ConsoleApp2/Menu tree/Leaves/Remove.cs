@@ -7,9 +7,9 @@
 
     public override void Process()
     {
-        var consoleWriter = new ConsoleWriter();
         if (HasErrors())
             return;
+        var consoleWriter = new ConsoleWriter();
         items!.RemoveAt((int)Index!);
         consoleWriter.WriteMessage("Successful delete", ConsoleColor.Green);
     }

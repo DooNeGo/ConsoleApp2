@@ -10,8 +10,8 @@
         List<Person> people = new()
         {
             new Person("Bob", 23),
-            new Person("Stas :)"),
-            new Person("Matvey supercalifragilisticexpialidocious programmer")
+            new Person("Stas :)", 1),
+            new Person("Matvey supercalifragilisticexpialidocious programmer", 1)
         };
         while (true)
         {

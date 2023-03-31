@@ -22,7 +22,10 @@
         get { return password; }
         set
         {
-            password = Convert.ToString(value!.GetHashCode());
+            if (value is null)
+                password = null;
+            else
+                password = Convert.ToString(value!.GetHashCode());
         }
     }
 

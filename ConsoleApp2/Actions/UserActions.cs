@@ -67,4 +67,21 @@
                 consoleWriter.WriteMessage("Wrong number", ConsoleColor.Red);
         }
     }
+
+    public List<User>? Search(List<User> items)
+    {
+        var consoleReader = new ConsoleReader();
+        Console.Clear();
+        Console.Write("Search (0 - Return): ");
+        var compare = consoleReader.ReadString();
+        if (compare is null)
+            return null;
+        var list = new List<User>();
+        foreach (var user in items)
+        {
+            if (user.Username!.ToLower().Contains(compare.ToLower()))
+                list.Add(user);
+        }
+        return list;
+    }
 }
