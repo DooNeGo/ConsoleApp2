@@ -1,6 +1,6 @@
-﻿internal class EditName : EditTool<Person>
+﻿internal class EditPersonName : EditTool<Person>
 {
-    public EditName(int? index, List<Person>? people, string menuItem = "Edit name") : base(index, people, menuItem)
+    public EditPersonName(string name, ApplicationContext<Person> context) : base(name, context)
     { }
 
     protected override bool EditField()
@@ -9,7 +9,7 @@
         string? newName = personActions.GetName();
         if (newName is null)
             return false;
-        items![(int)Index!].Name = newName;
+        context.CurrentItem!.Name = newName;
         return true;
     }
 }

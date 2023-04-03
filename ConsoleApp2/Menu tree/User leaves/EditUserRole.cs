@@ -1,6 +1,6 @@
-﻿internal class EditRole : EditTool<User>
+﻿internal class EditUserRole : EditTool<User>
 {
-    public EditRole(int? index, List<User>? list, string menuItem = "Edit role") : base(index, list, menuItem)
+    public EditUserRole(string name, ApplicationContext<User> context) : base(name, context)
     { }
 
     protected override bool EditField()
@@ -9,7 +9,7 @@
         var roleNew = userActions.GetRoleFromConsole();
         if (roleNew is null)
             return false;
-        items![(int)Index!].Role = roleNew;
+        context.CurrentItem!.Role = roleNew;
         return true;
     }
 }

@@ -1,18 +1,14 @@
 ﻿abstract class EditTool<T> : Menu
 {
-    protected int? index;
-    protected List<T>? items;
+    protected readonly ApplicationContext<T> context;
 
-    public EditTool(int? index, List<T>? items, string? menuItem) : base(menuItem)
+    public EditTool(string name, ApplicationContext<T> context) : base(name)
     {
-        this.items = items;
-        this.index = index;
+        this.context = context;
     }
 
     public override void Process()
     {
-        if (HasErrors())
-            return;
         var consoleWriter = new ConsoleWriter();
         Console.Clear();
         if (EditField() is true)
@@ -20,21 +16,4 @@
     }
 
     protected abstract bool EditField();
-
-    protected override bool HasErrors()
-    {
-        if (items is null || index is null)
-            return true;
-        return false;
-    }
-
-    protected override void UpdateChildrens()
-    {
-        throw new NotImplementedException();
-    }
-
-    protected int? Index
-    {
-        get { return index; }
-    }
 }

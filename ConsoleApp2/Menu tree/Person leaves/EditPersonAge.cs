@@ -1,6 +1,6 @@
-﻿internal class EditAge : EditTool<Person>
+﻿internal class EditPersonAge : EditTool<Person>
 {
-    public EditAge(int? index, List<Person>? people, string menuItem = "Edit age") : base(index, people, menuItem)
+    public EditPersonAge(string name, ApplicationContext<Person> context) : base(name, context)
     { }
 
     protected override bool EditField()
@@ -9,7 +9,7 @@
         var ageNew = personActions.GetAge();
         if (ageNew is null || ageNew == 0)
             return false;
-        items![(int)Index!].Age = ageNew;
+        context.CurrentItem!.Age = ageNew;
         return true;
     }
 }

@@ -1,22 +1,25 @@
-﻿internal class AddPerson : ExtendPersonMainMenu
+﻿internal class AddPerson : Menu
 {
-    public AddPerson(List<Person>? people, string menuItem = "Add") : base(people, menuItem)
-    { }
+    private readonly List<Person> people;
+    public AddPerson(string name, List<Person> people) : base(name)
+    {
+        this.people = people;
+    }
 
     public override void Process()
     {
-        if (HasErrors() is true)
-            return;
         var personActions = new PersonActions();
         var consoleWriter = new ConsoleWriter();
         while (true)
         {
+            Console.Clear();
+            Console.WriteLine("----- Person add -----");
             var newPerson = personActions.AddNewListItem();
             if (newPerson == null)
                 return;
             if (personActions.CheckRepetitions(people, newPerson) is false)
             {
-                people!.Add(newPerson);
+                people.Add(newPerson);
                 consoleWriter.WriteMessage("Successful add", ConsoleColor.Green);
             }
             else

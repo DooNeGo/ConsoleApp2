@@ -1,7 +1,11 @@
-﻿internal class AddUser : ExtendUserMainMenu
+﻿internal class AddUser : Menu
 {
-    public AddUser(List<User>? users, string menuItem = "Add") : base(users, menuItem)
-    { }
+    private readonly List<User> users;
+
+    public AddUser(string name, List<User> users) : base(name)
+    {
+        this.users = users;
+    }
 
     public override void Process()
     {
@@ -9,14 +13,14 @@
         var consoleWriter = new ConsoleWriter();
         while (true)
         {
-        if (HasErrors())
-            return;
+            Console.Clear();
+            Console.WriteLine("----- User add -----");
             var newUser = userActions.AddNewListItem();
             if (newUser is null)
                 return;
             if (userActions.CheckRepetitions(users, newUser) is false)
             {
-                users?.Add(newUser);
+                users.Add(newUser);
                 consoleWriter.WriteMessage("Success", ConsoleColor.Green);
             }
             else

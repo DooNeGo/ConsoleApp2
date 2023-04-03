@@ -1,6 +1,6 @@
-﻿internal class EditPassword : EditTool<User>
+﻿internal class EditUserPassword : EditTool<User>
 {
-    public EditPassword(int? index, List<User>? list, string menuItem = "Edit password") : base(index, list, menuItem)
+    public EditUserPassword(string name, ApplicationContext<User> context) : base(name, context)
     { }
 
     protected override bool EditField()
@@ -9,7 +9,7 @@
         var passwordNew = userActions.GetPasswordFromConsole();
         if (passwordNew is null)
             return false;
-        items![(int)Index!].Password = passwordNew;
+        context.CurrentItem!.Password = passwordNew;
         return true;
     }
 }

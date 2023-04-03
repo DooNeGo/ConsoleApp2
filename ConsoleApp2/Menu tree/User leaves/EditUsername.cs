@@ -1,6 +1,6 @@
-﻿internal class EditUsername : EditTool<User>
+﻿internal class EditUserName : EditTool<User>
 {
-    public EditUsername(int? index, List<User>? list, string menuItem = "Edit login") : base(index, list, menuItem)
+    public EditUserName(string name, ApplicationContext<User> context) : base(name, context)
     { }
 
     protected override bool EditField()
@@ -9,7 +9,7 @@
         var usernameNew = userActions.GetUsenameFromConsole();
         if (usernameNew is null)
             return false;
-        items![(int)Index!].Username = usernameNew;
+        context.CurrentItem!.Username = usernameNew;
         return true;
     }
 }

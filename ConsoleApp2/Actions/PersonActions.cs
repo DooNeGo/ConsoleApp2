@@ -1,9 +1,8 @@
-﻿class PersonActions : DataActions<Person>
+﻿class PersonActions : DataActions
 {
-    public override Person? AddNewListItem()
+    public Person? AddNewListItem()
     {
         Person person = new();
-        Console.Clear();
         person.Name = GetName();
         if (person.Name is null)
             return null;
@@ -43,26 +42,5 @@
             else
                 return value;
         }
-    }
-
-    public List<Person>? Search(List<Person> items)
-    {
-        var consoleReader = new ConsoleReader();
-        Console.Clear();
-        Console.Write("Search (0 - Return): ");
-        var compare = consoleReader.ReadString();
-        if (compare is null)
-            return null;
-        compare = compare.ToLower();
-        var list = new List<Person>();
-        foreach (var person in items)
-        {
-            var ageString = person.Age.ToString()!.ToLower();
-            if (person.Name!.ToLower().Contains(compare) || ageString.Contains(compare))
-            {
-                list.Add(person);
-            }
-        }
-        return list;
     }
 }

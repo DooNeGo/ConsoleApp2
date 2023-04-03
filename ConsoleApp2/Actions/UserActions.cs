@@ -1,4 +1,4 @@
-﻿internal class UserActions : DataActions<User>
+﻿internal class UserActions : DataActions
 {
     public int? FindUser(List<User> Users, User user)
     {
@@ -12,10 +12,9 @@
         return null;
     }
 
-    public override User? AddNewListItem()
+    public User? AddNewListItem()
     {
         User user = new();
-        Console.Clear();
         user.Username = GetUsenameFromConsole();
         if (user.Username is null)
             return null;
@@ -77,10 +76,10 @@
         if (compare is null)
             return null;
         var list = new List<User>();
-        foreach (var user in items)
+        for (int i = 0; i < items.Count; i++)
         {
-            if (user.Username!.ToLower().Contains(compare.ToLower()))
-                list.Add(user);
+            if (items[i].Username!.ToLower().Contains(compare.ToLower()))
+                list.Add(items[i]);
         }
         return list;
     }

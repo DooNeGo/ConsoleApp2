@@ -8,12 +8,12 @@
         }
         if (item is Person person)
         {
-            Console.WriteLine($"Name: {person?.Name}  Age: {person?.Age}");
+            Console.WriteLine($"Name: {person.Name}  Age: {person.Age}");
             return true;
         }
         else if (item is User user)
         {
-            Console.WriteLine($"Username: {user?.Username}  Role: {user?.Role}");
+            Console.WriteLine($"Username: {user.Username}  Role: {user.Role}");
             return true;
         }
         else
@@ -23,10 +23,11 @@
     public void WriteMessage(string message, ConsoleColor color = ConsoleColor.White)
     {
         Console.Clear();
+        Console.WriteLine("----- Message -----");
         Console.ForegroundColor = color;
         Console.WriteLine(message);
         Console.ResetColor();
-        Console.WriteLine("Нажмите <Enter> для выхода... ");
+        Console.WriteLine("Нажмите <Enter> для продолжения... ");
         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
     }
 }

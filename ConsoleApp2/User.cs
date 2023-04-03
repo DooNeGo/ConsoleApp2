@@ -1,20 +1,14 @@
 ﻿internal class User
 {
-    private string? username;
+    public string? Username { get; set; }
     private string? password;
-    private Program.Role? role;
+    public Program.Role? Role { get; set; }
 
-    public User(string username = "user", string password = "", Program.Role role = Program.Role.User)
+    public User(string username = "Undefined", string password = "", Program.Role role = Program.Role.User)
     {
-        this.username = username;
+        Username = username;
         Password = password;
-        this.role = role;
-    }
-
-    public string? Username
-    { 
-        get { return username; }
-        set { username = value; }
+        Role = role;
     }
 
     public string? Password
@@ -22,17 +16,11 @@
         get { return password; }
         set
         {
-            if (value is null)
-                password = null;
-            else
+            if (value is not null)
                 password = Convert.ToString(value!.GetHashCode());
+            else
+                password = value;
         }
-    }
-
-    public Program.Role? Role
-    { 
-        get { return role; }
-        set { role = value; }
     }
 
     public override bool Equals(object? obj)
