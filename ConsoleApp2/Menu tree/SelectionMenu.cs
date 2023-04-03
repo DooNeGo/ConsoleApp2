@@ -33,10 +33,7 @@
         var consoleWriter = new ConsoleWriter();
         Console.WriteLine($"----- {Name} -----");
         if (context.Items.Count == 0)
-        {
-            consoleWriter.WriteMessage("Empty...");
-            return;
-        }
+            Console.WriteLine("Empty...");
         for (int i = 0; i < context.Items.Count; i++)
         {
             Console.Write($"{i + 1}. ");
