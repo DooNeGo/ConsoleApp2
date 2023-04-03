@@ -22,11 +22,12 @@
             userContext.CurrentUser = DoAuthorization(users);
             if (userContext.CurrentUser is null)
                 return;
-            InitializeMenuWithRole(userContext, personContext);
+            var menu = InitializeMenuWithRole(userContext, personContext);
+            menu.Process();
         }
     }
 
-    private static void InitializeMenuWithRole(ApplicationContext<User> userContext, ApplicationContext<Person> personContext)
+    private static Menu InitializeMenuWithRole(ApplicationContext<User> userContext, ApplicationContext<Person> personContext)
     {
 
         var mainMenu = new Menu("MainMenu");
@@ -39,6 +40,7 @@
 
         var personControlMenu = personSelectionMenu.Add(new ControlMenu<Person>("Control menu", personContext));
         personSearch.Add(personControlMenu);
+
         if (userContext.CurrentUser!.Role == Role.Admin)
         {
             var userMainMenu = mainMenu.Add(new Menu("Users"));
@@ -58,7 +60,8 @@
             personControlMenu.Add(new EditPersonAge("Edit age", personContext));
             personControlMenu.Add(new RemoveListItem<Person>("Remove", personContext));
         }
-        mainMenu.Process();
+
+        return mainMenu;
     }
 
     private static User? DoAuthorization(List<User> users)
