@@ -128,7 +128,18 @@
                 consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
             }));
 
-            userControlMenu.Add(new RemoveListItem<User>("Remove", userContext));
+            userControlMenu.Add(new MenuLeaf<User>("Remove", userContext, context =>
+            {
+                var consoleWriter = new ConsoleWriter();
+                if (context.CurrentUser != context.CurrentItem)
+                {
+                    context.Items.Remove(context.CurrentItem!);
+                    context.FoundItems?.Remove(context.CurrentItem!);
+                    consoleWriter.WriteMessage("Successful delete", ConsoleColor.Green);
+                }
+                else
+                    consoleWriter.WriteMessage("You can not delete the active user", ConsoleColor.Red);
+            }));
 
             personControlMenu.Add(new MenuLeaf<Person>("Edit name", personContext, personContext =>
             {
@@ -154,7 +165,13 @@
                 consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
             }));
 
-            personControlMenu.Add(new RemoveListItem<Person>("Remove", personContext));
+            personControlMenu.Add(new MenuLeaf<Person>("Remove", personContext, context =>
+            {
+                var consoleWriter = new ConsoleWriter();
+                context.Items.Remove(context.CurrentItem!);
+                context.FoundItems?.Remove(context.CurrentItem!);
+                consoleWriter.WriteMessage("Successful delete", ConsoleColor.Green);
+            }));
         }
 
         return mainMenu;
