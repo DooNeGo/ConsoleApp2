@@ -3,16 +3,16 @@
     public Person? AddNewListItem()
     {
         Person person = new();
-        person.Name = GetName();
+        person.Name = GetNameDialog();
         if (person.Name is null)
             return null;
-        person.Age = GetAge();
+        person.Age = GetAgeDialog();
         if (person.Age is null)
             return null;
         return person;
     }
 
-    public string? GetName()
+    public string? GetNameDialog()
     {
         while (true)
         {
@@ -27,7 +27,7 @@
         }
     }
 
-    public int? GetAge()
+    public int? GetAgeDialog()
     {
         var consoleReader = new ConsoleReader();
         var consoleWriter = new ConsoleWriter();

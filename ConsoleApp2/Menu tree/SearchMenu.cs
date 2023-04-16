@@ -1,8 +1,8 @@
-﻿internal class SearchListItem<T> : Menu
+﻿internal class SearchMenu<T> : Menu
 {
     private readonly ApplicationContext<T> context;
 
-    public SearchListItem(string name, ApplicationContext<T> context) : base(name)
+    public SearchMenu(string name, ApplicationContext<T> context) : base(name)
     {
         this.context = context;
     }
