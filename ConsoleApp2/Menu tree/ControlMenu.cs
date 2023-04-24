@@ -19,8 +19,8 @@
             Console.Clear();
             ShowChildren();
             var value = consoleReader.ReadInt();
-            if (value > 0 && value <= childrens.Count)
-                childrens[(int)value - 1].Process();
+            if (value > 0 && value <= children.Count)
+                children[(int)value - 1].Process();
             else if (value == 0)
                 return;
             else
@@ -33,9 +33,9 @@
         var consoleWriter = new ConsoleWriter();
         Console.WriteLine($"----- {Name} -----");
         consoleWriter.WriteListItem(context.CurrentItem);
-        for (int i = 0; i < childrens.Count; i++)
+        for (int i = 0; i < children.Count; i++)
         {
-            Console.WriteLine($"{i + 1} - {childrens[i].Name}");
+            Console.WriteLine($"{i + 1} - {children[i].Name}");
         }
         Console.WriteLine("0 - Return");
     }

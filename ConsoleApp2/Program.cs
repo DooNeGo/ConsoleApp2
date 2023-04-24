@@ -4,8 +4,8 @@
     {
         var users = new List<User>
         {
-            new User("admin", "admin", Role.Admin),
-            new User("user", "", Role.User),
+            new User("admin", "admin", Role.ADMIN),
+            new User("user", "", Role.USER),
         };
 
         var people = new List<Person>()
@@ -17,6 +17,7 @@
 
         var userContext = new ApplicationContext<User>(users);
         var personContext = new ApplicationContext<Person>(people);
+
         while (true)
         {
             userContext.CurrentUser = DoAuthorization(users);
@@ -61,7 +62,7 @@
         var personControlMenu = personSelectionMenu.Add(new ControlMenu<Person>("Control menu", personContext));
         personSearch.Add(personControlMenu);
 
-        if (userContext.CurrentUser!.Role == Role.Admin)
+        if (userContext.CurrentUser!.Role == Role.ADMIN)
         {
             var userMainMenu = mainMenu.Add(new Menu("Users"));
 
@@ -201,7 +202,7 @@
 
     public enum Role : byte
     {
-        User,
-        Admin
+        USER,
+        ADMIN
     }
 }

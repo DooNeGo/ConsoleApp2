@@ -1,21 +1,11 @@
 ﻿internal class ConsoleWriter : IWriter
 {
-    public bool WriteListItem<T>(T item)
+    public void WriteListItem<T>(T item)
     {
-        if (item is null)
-        {
-            return false;
-        }
         if (item is Person person)
-        {
             Console.WriteLine($"Name: {person.Name}  Age: {person.Age}");
-            return true;
-        }
         else if (item is User user)
-        {
             Console.WriteLine($"Username: {user.Username}  Role: {user.Role}");
-            return true;
-        }
         else
             throw new Exception();            
     }
@@ -31,4 +21,3 @@
         while (Console.ReadKey().Key != ConsoleKey.Enter) { }
     }
 }
-

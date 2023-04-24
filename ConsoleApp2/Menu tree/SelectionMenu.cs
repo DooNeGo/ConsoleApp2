@@ -19,7 +19,7 @@
             if (value > 0 && value <= context.Items.Count)
             {
                 context.CurrentItem = context.Items[(int)value - 1];
-                childrens[0].Process();
+                children[0].Process();
             }
             else if (value == 0)
                 return;

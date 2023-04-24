@@ -20,10 +20,10 @@
             Console.Clear();
             ShowChildren();
             var value = consoleReader.ReadInt();
-            if (value > 0 && value <= context.FoundItems!.Count)
+            if (value > 0 && value <= context.FoundItems.Count)
             {
                 context.CurrentItem = context.FoundItems[(int)value - 1];
-                childrens[0].Process();
+                children[0].Process();
             }
             else if (value == 0)
             {

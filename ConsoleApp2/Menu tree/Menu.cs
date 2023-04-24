@@ -1,7 +1,7 @@
 ﻿internal class Menu
 {
-    protected readonly List<Menu> childrens = new();
-    public string Name { get; private set; }
+    protected readonly List<Menu> children = new();
+    public string Name { get; init; }
 
     public Menu(string name)
     {
@@ -10,16 +10,16 @@
 
     public Menu Add(Menu child)
     {
-        childrens.Add(child);
+        children.Add(child);
         return child;
     }
 
     protected virtual void ShowChildren()
     {
         Console.WriteLine($"----- {Name} -----");
-        for (int i = 0; i < childrens.Count; i++)
+        for (int i = 0; i < children.Count; i++)
         {
-            Console.WriteLine($"{i + 1} - {childrens[i].Name}");
+            Console.WriteLine($"{i + 1} - {children[i].Name}");
         }
         Console.WriteLine("0 - Return");
     }
@@ -33,8 +33,8 @@
             Console.Clear();
             ShowChildren();
             var value = consoleReader.ReadInt();
-            if (value > 0 && value <= childrens.Count)
-                childrens[(int)value - 1].Process();
+            if (value > 0 && value <= children.Count)
+                children[(int)value - 1].Process();
             else if (value == 0)
                 return;
             else

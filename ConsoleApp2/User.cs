@@ -1,10 +1,10 @@
-﻿internal class User
+﻿internal record User
 {
     public string? Username { get; set; }
     private string? password;
     public Program.Role? Role { get; set; }
 
-    public User(string username = "Undefined", string password = "", Program.Role role = Program.Role.User)
+    public User(string username = "Undefined", string password = "", Program.Role role = Program.Role.USER)
     {
         Username = username;
         Password = password;
@@ -17,16 +17,10 @@
         set
         {
             if (value is not null)
-                password = Convert.ToString(value!.GetHashCode());
+                password = Convert.ToString(value.GetHashCode());
             else
                 password = value;
         }
-    }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is User user &&
-               Username == user.Username;
     }
 
     public override int GetHashCode()
