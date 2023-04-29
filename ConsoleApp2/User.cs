@@ -1,4 +1,4 @@
-﻿internal record User
+﻿internal class User
 {
     public string? Username { get; set; }
     private string? password;
@@ -16,15 +16,16 @@
         get { return password; }
         set
         {
-            if (value is not null)
-                password = Convert.ToString(value.GetHashCode());
-            else
+            if (value is null)
                 password = value;
+            else
+                password = Convert.ToString(value.GetHashCode());
         }
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Username, Password, Role);
-    }
+    public override int GetHashCode() => HashCode.Combine(Username, Password, Role);
+
+    public override bool Equals(object? obj) => obj is User user && Username == user.Username;
+
+    public override string? ToString() => "Username: " + Username + "  Role: " + Role;
 }

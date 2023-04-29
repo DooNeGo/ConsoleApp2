@@ -1,4 +1,4 @@
-internal record Person
+internal class Person
 {
     public string? Name { get; set; }
     public int? Age { get; set; }
@@ -8,4 +8,6 @@ internal record Person
         Name = name;
         Age = age;
     }
+
+    public override string? ToString() => "Name: " + Name + "  Age: " + Age;
 }

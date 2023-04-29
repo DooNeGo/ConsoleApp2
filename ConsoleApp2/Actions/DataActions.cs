@@ -21,6 +21,7 @@
         if (compare is null)
             return;
         compare = compare.ToLower();
+
         if (context is ApplicationContext<Person> personContext)
         {
             personContext.FoundItems = new();
@@ -34,7 +35,8 @@
             }
             return;
         }
-        if (context is ApplicationContext<User> userContext)
+
+        else if (context is ApplicationContext<User> userContext)
         {
             userContext.FoundItems = new();
             foreach (var user in userContext.Items)
@@ -46,28 +48,10 @@
             }
             return;
         }
-    }
 
-    public bool ShowList<T>(List<T>? list)
-    {
-        var consoleWriter = new ConsoleWriter();
-        Console.Clear();
-        Console.WriteLine($"-----List-----");
-        if (list is null || list.Count == 0)
+        else
         {
-            Console.WriteLine("Empty...");
-            return false;
+            throw new NotImplementedException();
         }
-        for (int i = 0; i < list.Count; i++)
-        {
-            Console.Write($"{i + 1}. ");
-            if (list is List<User> users)
-                consoleWriter.WriteListItem(users[i]);
-            else if (list is List<Person> people)
-                consoleWriter.WriteListItem(people[i]);
-            else
-                throw new Exception();
-        }
-        return true;
     }
 }

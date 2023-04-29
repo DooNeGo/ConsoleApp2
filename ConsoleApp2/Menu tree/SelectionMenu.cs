@@ -19,7 +19,7 @@
             if (value > 0 && value <= context.Items.Count)
             {
                 context.CurrentItem = context.Items[(int)value - 1];
-                children[0].Process();
+                children.Value[0].Process();
             }
             else if (value == 0)
                 return;
@@ -30,15 +30,13 @@
 
     protected override void ShowChildren()
     {
-        var consoleWriter = new ConsoleWriter();
         Console.WriteLine($"----- {Name} -----");
+
         if (context.Items.Count == 0)
             Console.WriteLine("Empty...");
+
         for (int i = 0; i < context.Items.Count; i++)
-        {
-            Console.Write($"{i + 1}. ");
-            consoleWriter.WriteListItem(context.Items[i]);
-        }
+            Console.WriteLine($"{i + 1}. {context.Items[i]}");
         Console.Write("Enter number (0 - Return): ");
     }
 }
