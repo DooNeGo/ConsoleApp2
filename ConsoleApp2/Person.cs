@@ -10,4 +10,13 @@ internal class Person
     }
 
     public override string? ToString() => "Name: " + Name + "  Age: " + Age;
+
+    public override bool Equals(object? obj)
+    {
+        return obj is Person person &&
+               Name == person.Name &&
+               Age == person.Age;
+    }
+
+    public override int GetHashCode() => HashCode.Combine(Name, Age);
 }

@@ -37,17 +37,16 @@
 
         var personSelectionMenu = personMainMenu.Add(new SelectionMenu<Person>("Selection menu", personContext));
         var personSearch = personMainMenu.Add(new SearchMenu<Person>("Search", personContext));
-        personMainMenu.Add(new MenuLeaf<Person>("Add", personContext, (personContext, consoleWriter, consoleReader) =>
+        personMainMenu.Add(new MenuLeaf<Person>("Add", personContext, (personContext, consoleWriter, consoleReader, consoleDialog) =>
         {
-            var personActions = new PersonActions();
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("----- Person add -----");
-                var newPerson = personActions.AddNewListItem();
+                var newPerson = consoleDialog.GetPersonDialog();
                 if (newPerson == null)
                     return;
-                if (personActions.CheckRepetitions(personContext.Items, newPerson) is false)
+                if (!personContext.Items.Exists(person => person.Equals(newPerson)))
                 {
                     personContext.Items.Add(newPerson);
                     consoleWriter.WriteMessage("Successful add", ConsoleColor.Green);
@@ -66,17 +65,16 @@
         {
             var userMainMenu = mainMenu.Add(new Menu("Users"));
 
-            userMainMenu.Add(new MenuLeaf<User>("Add", userContext, (userContext, consoleWriter, consoleReader) =>
+            userMainMenu.Add(new MenuLeaf<User>("Add", userContext, (userContext, consoleWriter, consoleReader, consoleDialog) =>
             {
-                var userActions = new UserActions();
                 while (true)
                 {
                     Console.Clear();
                     Console.WriteLine("----- User add -----");
-                    var newUser = userActions.AddNewListItem();
+                    var newUser = consoleDialog.GetUserDialog();
                     if (newUser is null)
                         return;
-                    if (userActions.CheckRepetitions(userContext.Items, newUser) is false)
+                    if (!userContext.Items.Exists(user => user.Equals(newUser)))
                     {
                         userContext.Items.Add(newUser);
                         consoleWriter.WriteMessage("Success", ConsoleColor.Green);
@@ -92,37 +90,34 @@
             var userControlMenu = userSelectionMenu.Add(new ControlMenu<User>("Control menu", userContext));
             userSearch.Add(userControlMenu);
 
-            userControlMenu.Add(new MenuLeaf<User>("Edit Name", userContext, (userContext, consoleWriter, consoleReader) =>
+            userControlMenu.Add(new MenuLeaf<User>("Edit Name", userContext, (userContext, consoleWriter, consoleReader, consoleDialog) =>
             {
-                var userActions = new UserActions();
-                var usernameNew = userActions.GetUsenameDialog();
+                var usernameNew = consoleDialog.GetUsenameDialog();
                 if (usernameNew is null)
                     return;
                 userContext.CurrentItem!.Username = usernameNew;
                 consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
             }));
 
-            userControlMenu.Add(new MenuLeaf<User>("Edit password", userContext, (userContext, consoleWriter, consoleReader) =>
+            userControlMenu.Add(new MenuLeaf<User>("Edit password", userContext, (userContext, consoleWriter, consoleReader, consoleDialog) =>
             {
-                var userActions = new UserActions();
-                var passwordNew = userActions.GetPasswordDialog();
+                var passwordNew = consoleDialog.GetPasswordDialog();
                 if (passwordNew is null)
                     return;
                 userContext.CurrentItem!.Password = passwordNew;
                 consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
             }));
 
-            userControlMenu.Add(new MenuLeaf<User>("Edit role", userContext, (userContext, consoleWriter, consoleReader) =>
+            userControlMenu.Add(new MenuLeaf<User>("Edit role", userContext, (userContext, consoleWriter, consoleReader, consoleDialog) =>
             {
-                var userActions = new UserActions();
-                var roleNew = userActions.GetRoleDialog();
+                var roleNew = consoleDialog.GetRoleDialog();
                 if (roleNew is null)
                     return;
                 userContext.CurrentItem!.Role = roleNew;
                 consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
             }));
 
-            userControlMenu.Add(new MenuLeaf<User>("Remove", userContext, (context, consoleWriter, consoleReader) =>
+            userControlMenu.Add(new MenuLeaf<User>("Remove", userContext, (context, consoleWriter, consoleReader, consoleDialog) =>
             {
                 if (context.CurrentUser != context.CurrentItem)
                 {
@@ -134,27 +129,25 @@
                     consoleWriter.WriteMessage("You can not delete the active user", ConsoleColor.Red);
             }));
 
-            personControlMenu.Add(new MenuLeaf<Person>("Edit name", personContext, (personContext, consoleWriter, consoleReader) =>
+            personControlMenu.Add(new MenuLeaf<Person>("Edit name", personContext, (personContext, consoleWriter, consoleReader, consoleDialog) =>
             {
-                var personActions = new PersonActions();
-                string? newName = personActions.GetNameDialog();
+                string? newName = consoleDialog.GetPersonNameDialog();
                 if (newName is null)
                     return;
                 personContext.CurrentItem!.Name = newName;
                 consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
             }));
 
-            personControlMenu.Add(new MenuLeaf<Person>("Edit age", personContext, (personContext, consoleWriter, consoleReader) =>
+            personControlMenu.Add(new MenuLeaf<Person>("Edit age", personContext, (personContext, consoleWriter, consoleReader, consoleDialog) =>
             {
-                var personActions = new PersonActions();
-                var ageNew = personActions.GetAgeDialog();
+                var ageNew = consoleDialog.GetPersonAgeDialog();
                 if (ageNew is null || ageNew == 0)
                     return;
                 personContext.CurrentItem!.Age = ageNew;
                 consoleWriter.WriteMessage("Successful edit", ConsoleColor.Green);
             }));
 
-            personControlMenu.Add(new MenuLeaf<Person>("Remove", personContext, (personContext, consoleWriter, consoleReader) =>
+            personControlMenu.Add(new MenuLeaf<Person>("Remove", personContext, (personContext, consoleWriter, consoleReader, consoleDialog) =>
             {
                 personContext.Items.Remove(personContext.CurrentItem!);
                 personContext.FoundItems?.Remove(personContext.CurrentItem!);
@@ -170,7 +163,6 @@
         var authUser = new User();
         var consoleReader = new ConsoleReader();
         var consoleWriter = new ConsoleWriter();
-        var userActions = new UserActions();
         while (true)
         {
             Console.Clear();
@@ -178,20 +170,16 @@
             Console.Write("Username (0 - Exit): ");
             authUser.Username = consoleReader.ReadString();
             if (authUser.Username is null)
-            {
                 return null;
-            }
             Console.Write("Password (0 - Exit): ");
             authUser.Password = consoleReader.ReadString();
             if (authUser.Password is null)
-            {
                 return null;
-            }
-            var status = userActions.FindUser(users, authUser);
+            var status = users.Find(user => user.Username == authUser.Username && user.Password == authUser.Password);
             if (status != null)
             {
                 consoleWriter.WriteMessage("Login Successful", ConsoleColor.Green);
-                return users[(int)status];
+                return status;
             }
             else
             {
@@ -205,4 +193,5 @@
         USER,
         ADMIN
     }
+
 }

@@ -1,18 +1,50 @@
-﻿internal class UserActions : DataActions
+﻿internal class ConsoleDialog
 {
-    public int? FindUser(List<User> Users, User user)
+    public Person? GetPersonDialog()
     {
-        for (int i = 0; i < Users.Count; i++)
-        {
-            if (Users[i].Username == user.Username && Users[i].Password == user.Password)
-            {
-                return i;
-            }
-        }
-        return null;
+        Person person = new();
+        person.Name = GetPersonNameDialog();
+        if (person.Name is null)
+            return null;
+        person.Age = GetPersonAgeDialog();
+        if (person.Age is null)
+            return null;
+        return person;
     }
 
-    public User? AddNewListItem()
+    public string? GetPersonNameDialog()
+    {
+        while (true)
+        {
+            var consoleReader = new ConsoleReader();
+            var consoleWriter = new ConsoleWriter();
+            Console.Write("Enter a name (0 - Return): ");
+            var name = consoleReader.ReadString();
+            if (name != "")
+                return name;
+            else
+                consoleWriter.WriteMessage("Please, enter a name", ConsoleColor.Red);
+        }
+    }
+
+    public int? GetPersonAgeDialog()
+    {
+        var consoleReader = new ConsoleReader();
+        var consoleWriter = new ConsoleWriter();
+        while (true)
+        {
+            Console.Write("Enter an age (0 - Return): ");
+            var value = consoleReader.ReadInt();
+            if (value is null || value < 0 || value > 100)
+                consoleWriter.WriteMessage("Wrong number", ConsoleColor.Red);
+            else if (value == 0)
+                return null;
+            else
+                return value;
+        }
+    }
+
+    public User? GetUserDialog()
     {
         User user = new();
         user.Username = GetUsenameDialog();
@@ -65,22 +97,5 @@
             else
                 consoleWriter.WriteMessage("Wrong number", ConsoleColor.Red);
         }
-    }
-
-    public List<User>? Search(List<User> items)
-    {
-        var consoleReader = new ConsoleReader();
-        Console.Clear();
-        Console.Write("Search (0 - Return): ");
-        var compare = consoleReader.ReadString();
-        if (compare is null)
-            return null;
-        var list = new List<User>();
-        for (int i = 0; i < items.Count; i++)
-        {
-            if (items[i].Username!.ToLower().Contains(compare.ToLower()))
-                list.Add(items[i]);
-        }
-        return list;
     }
 }

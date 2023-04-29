@@ -1,17 +1,5 @@
 ﻿internal class DataActions
 {
-    public bool CheckRepetitions<T>(List<T>? list, T newItem)
-    {
-        if (list is null)
-            return false;
-        foreach (T item in list)
-        {
-            if (item!.Equals(newItem))
-                return true;
-        }
-        return false;
-    }
-
     public void Search<T>(ApplicationContext<T> context)
     {
         var consoleReader = new ConsoleReader();

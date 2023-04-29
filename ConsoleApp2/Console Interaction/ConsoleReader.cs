@@ -1,4 +1,4 @@
-﻿class ConsoleReader : IReader
+﻿internal class ConsoleReader : IReader
 {
     public int? ReadInt() => int.TryParse(Console.ReadLine(), out var result) ? result : null;
 
